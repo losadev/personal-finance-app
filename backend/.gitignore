@@ -1,0 +1,70 @@
+# -----------------------------------------------------
+# Node / TypeScript / NestJS
+# -----------------------------------------------------
+node_modules/
+dist/
+build/
+.tmp/
+.temp/
+.cache/
+.ncc/
+.eslintcache
+*.tsbuildinfo
+
+# Compilados y mapas
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+
+# Logs y diagnósticos
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.pid
+*.seed
+*.pid.lock
+
+# Cobertura y pruebas
+coverage/
+.nyc_output/
+jest-html-reporters-*.html
+test-results/
+playwright-report/
+blob-report/
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+!.env.schema
+.env.local
+.env.*.local
+
+# Docker / Contenedores (artefactos locales)
+docker-data/
+.docker/
+*.tar
+
+# Sistemas operativos
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+*.swp
+*.swo
+
+# IDEs/editores
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.iml
+
+# Monorepo
