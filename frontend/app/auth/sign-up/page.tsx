@@ -1,4 +1,5 @@
 import AuthWrapper from "@/components/AuthWrapper";
+import SignUpForm from "@/components/forms/SignUpForm";
 import React from "react";
 
 type Props = {};
@@ -6,9 +7,9 @@ type Props = {};
 function page({}: Props) {
   return (
     <AuthWrapper>
-      <h1>Sign up</h1>
+      <SignUpForm />
     </AuthWrapper>
-  )
+  );
 }
 
 export default page;

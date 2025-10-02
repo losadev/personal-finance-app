@@ -26,7 +26,7 @@ const Input = ({ label, name, type, control, error }: Props) => {
           name={name}
           control={control}
           render={({ field }) => (
-            <input type={type} {...field} id={name} className="w-full" />
+            <input type={type} {...field} id={name} className="w-full focus:outline-none" />
           )}
         />
         {type === "password" ? (
@@ -38,7 +38,9 @@ const Input = ({ label, name, type, control, error }: Props) => {
           />
         ) : null}
       </div>
-      <span className="m-1.5">{error && error?.message}</span>
+      <span className="text-[#C94736]  min-h-4.5 text-[12px]">
+        {error && error?.message}
+      </span>
     </fieldset>
   );
 };
