@@ -59,7 +59,7 @@ function SignUpForm() {
           />
           <button
             type="submit"
-            className="py-5 text-center bg-[#201F24] w-full text-[#ffffff] rounded-lg text-[14px] leading-1.5 font-bold tracking-normal"
+            className="py-5 text-center bg-[#201F24] hover:bg-[#696868] cursor-pointer w-full text-[#ffffff] rounded-lg text-[14px] leading-1.5 font-bold tracking-normal"
           >
             Login
           </button>
