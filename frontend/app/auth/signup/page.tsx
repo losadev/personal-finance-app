@@ -1,10 +1,7 @@
 import AuthWrapper from "@/components/AuthWrapper";
 import SignUpForm from "@/components/forms/SignUpForm";
-import React from "react";
 
-type Props = {};
-
-function page({}: Props) {
+function page() {
   return (
     <AuthWrapper>
       <SignUpForm />

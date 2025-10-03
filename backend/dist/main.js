@@ -14,7 +14,7 @@ const app_module_1 = require("./app.module");
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        const app = yield core_1.NestFactory.create(app_module_1.AppModule);
+        const app = yield core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
         yield app
             .listen((_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3001)
             .then(() => console.log('Server running on http://localhost:3001'));

@@ -1,27 +1,27 @@
 "use client";
 import Input from "@/components/Input";
-import Image from "next/image";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpFormValues, signUpSchema } from "@/lib/schemas/auth/sign-up";
+import { useTransition } from "react";
+import { signUpAction } from "@/app/auth/actions";
+
+type SignUpData = Omit<SignUpFormValues, "confirmPassword">
 
 function SignUpForm() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const [isPending, startTransition] = useTransition();
+
+  const { control, handleSubmit, formState: { errors } } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
+    defaultValues: { name: '', email: '', password: '' },
   });
 
-  const onSubmit: SubmitHandler<SignUpFormValues> = (data) => {
-    console.log(data);
+  const onSubmit = (data: SignUpData) => {
+    startTransition(async () => {
+      await signUpAction(data);
+    });
   };
+  
   return (
     <>
       <div className="bg-[#ffffff] rounded-lg flex flex-col w-full py-6 px-5 gap-8 sm:max-w-xl">
@@ -61,7 +61,7 @@ function SignUpForm() {
             type="submit"
             className="py-5 text-center bg-[#201F24] hover:bg-[#696868] cursor-pointer w-full text-[#ffffff] rounded-lg text-[14px] leading-1.5 font-bold tracking-normal"
           >
-            Login
+            {isPending ? "Sending data... ": "Sign up"}
           </button>
         </form>
 

@@ -11,9 +11,8 @@ export class AuthController {
   //     return this.authService.signIn(signInDto.username, signInDto.password);
   //   }
 
-  @Post('register')
+  @Post('signup')
   signUp(@Body() signUpDto: RegisterDto) {
-    console.log(signUpDto);
     return this.authService.signUp(signUpDto);
   }
 }

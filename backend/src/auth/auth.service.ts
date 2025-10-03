@@ -12,18 +12,18 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  //   async signIn(username: string, pass: string): Promise<any> {
-  //     const user = await this.userService.findOne(username);
-  //     if (user?.password !== pass) {
-  //       throw new UnauthorizedException();
-  //     }
+  async signIn(username: string, pass: string): Promise<any> {
+    const user = await this.userService.findOne(username);
+    if (user?.password !== pass) {
+      throw new UnauthorizedException();
+    }
 
-  //     const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email };
 
-  //     return {
-  //       access_token: await this.jwtService.signAsync(payload),
-  //     };
-  //   }
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
+  }
 
   @UsePipes(new ZodValidationPipe(registerSchema))
   async signUp(registerDto: RegisterDto) {
