@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/components/Input";
+import Input from "@/components/ui/Input";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
