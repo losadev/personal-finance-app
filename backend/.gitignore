@@ -68,3 +68,11 @@ Icon?
 *.iml
 
 # Monorepo
+
+/generated/prisma
+
+/generated/prisma
+
+/generated/prisma
+
+/generated/prisma
