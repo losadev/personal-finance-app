@@ -15,7 +15,7 @@ export class UserService {
           equals: email.toLowerCase(),
         },
       },
-      select: { id: true },
+      select: { id: true,email: true,name: true, password: true },
     });
     return user;
   }

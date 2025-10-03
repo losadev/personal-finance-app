@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { email, z } from 'zod';
 
 export const registerSchema = z
   .object({
@@ -16,3 +16,14 @@ export const registerSchema = z
   });
 
 export type RegisterDto = z.infer<typeof registerSchema>;
+
+export const loginSchema = 
+z.object({
+  email: z.email(),
+  password: z
+      .string()
+      .min(8)
+      .regex(/^(?=.*[A-Za-z])(?=.*\d).+$/, 'Incluye letras y números'),
+})
+
+export type LoginDto = z.infer<typeof loginSchema>
