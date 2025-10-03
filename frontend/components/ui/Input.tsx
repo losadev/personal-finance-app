@@ -26,7 +26,12 @@ const Input = ({ label, name, type, control, error }: Props) => {
           name={name}
           control={control}
           render={({ field }) => (
-            <input type={type} {...field} id={name} className="w-full focus:outline-none" />
+            <input
+              type={type}
+              {...field}
+              id={name}
+              className="w-full focus:outline-none"
+            />
           )}
         />
         {type === "password" ? (

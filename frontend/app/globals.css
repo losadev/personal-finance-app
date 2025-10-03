@@ -1,1 +1,110 @@
 @import "tailwindcss";
+
+@theme {
+  /* Beige */
+  --color-beige-500-app: #98908b;
+  --color-beige-100-app: #f8f4f0;
+
+  /* Gray */
+  --color-gray-900-app: #201f24;
+  --color-gray-500-app: #696868;
+  --color-gray-300-app: #b3b3b3;
+  --color-gray-100-app: #f2f2f2;
+
+  /* Palette principal */
+  --color-green-app: #277c78;
+  --color-yellow-app: #f2cdac;
+  --color-cyan-app: #82c9d7;
+  --color-navy-app: #626070;
+  --color-red-app: #c94736;
+  --color-purple-app: #826cb0; /* Purple principal */
+
+  /* Other Colors */
+  --color-purple-alt-app: #af81ba; /* (evita sobrescribir la principal) */
+
+  --color-turquoise-app: #597c7c;
+  --color-brown-app: #93674f;
+  --color-magenta-app: #934f6f;
+  --color-blue-app: #3f82b2;
+  --color-navygrey-app: #97a0ac;
+  --color-armygreen-app: #7f9161;
+  --color-gold-app: #cab361;
+  --color-orange-app: #be6c49;
+  --color-white-app: #ffffff;
+
+  /* === Tipografía (Public Sans) === */
+  --font-sans-app:
+    "Public Sans", ui-sans-serif, system-ui, -apple-system,
+    Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  /* Tamaños (px) y line-heights */
+  --text-preset-1-size: 32px; /* Bold, 120% */
+  --text-preset-2-size: 20px; /* Bold, 120% */
+  --text-preset-3-size: 16px; /* Bold, 150% */
+  --text-preset-4-size: 14px; /* Regular/Bold, 150% */
+  --text-preset-5-size: 12px; /* Regular/Bold, 150% */
+
+  --leading-120: 1.2;
+  --leading-150: 1.5;
+  --tracking-0: 0;
+}
+
+/* === Utilities de presets de texto === */
+@utility text-preset-1 {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-1-size);
+  line-height: var(--leading-120);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-bold);
+}
+
+@utility text-preset-2 {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-2-size);
+  line-height: var(--leading-120);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-bold);
+}
+
+@utility text-preset-3 {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-3-size);
+  line-height: var(--leading-150);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-bold);
+}
+
+@utility text-preset-4 {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-4-size);
+  line-height: var(--leading-150);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-regular);
+}
+
+@utility text-preset-4-bold {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-4-size);
+  line-height: var(--leading-150);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-bold);
+}
+
+@utility text-preset-5 {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-5-size);
+  line-height: var(--leading-150);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-regular);
+}
+
+@utility text-preset-5-bold {
+  font-family: var(--font-sans-app);
+  font-size: var(--text-preset-5-size);
+  line-height: var(--leading-150);
+  letter-spacing: var(--tracking-0);
+  font-weight: var(--font-weight-bold);
+}
