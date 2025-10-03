@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: ./backend # usa el Dockerfile que tengas en ./backend
+    image: backend:dev
+    container_name: backend-dev
+    working_dir: /app
+    ports:
+      - "3005:3001" # host:container
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app # monta SOLO la carpeta backend
+      - /app/node_modules # volumen anónimo para no pisar deps
+    command: ["pnpm", "run", "start:dev"]
+
+  frontend:
+    build: ./frontend
+    image: frontend:dev
+    container_name: frontend-dev
+    working_dir: /app
+    ports:
+      - "3002:3000"
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/app # monta SOLO la carpeta frontend
+      - /app/node_modules
+    command: ["pnpm", "run", "dev"]
