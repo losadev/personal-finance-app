@@ -7,7 +7,7 @@ type Props = {
 const StatCard = (props: Props) => {
   return (
     <section
-      className={`p-5 rounded-lg flex flex-col gap-3 text-[#ffffff] ${props.className}`}
+      className={`p-5 md:p-6 rounded-lg flex flex-col gap-3 ${props.className}`}
     >
       <span className="text-preset-4">{props.title}</span>
       <span className="text-preset-1">{props.amount}</span>

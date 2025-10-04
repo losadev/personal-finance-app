@@ -1,11 +1,10 @@
 services:
   backend:
     build: ./backend # usa el Dockerfile que tengas en ./backend
-    image: backend:dev
     container_name: backend-dev
     working_dir: /app
     ports:
-      - "3005:3001" # host:container
+      - "3001:3001" # host:container
     env_file:
       - ./backend/.env
     volumes:
@@ -15,14 +14,29 @@ services:
 
   frontend:
     build: ./frontend
-    image: frontend:dev
     container_name: frontend-dev
     working_dir: /app
     ports:
-      - "3002:3000"
+      - "3000:3000"
     env_file:
       - ./frontend/.env
     volumes:
       - ./frontend:/app # monta SOLO la carpeta frontend
       - /app/node_modules
     command: ["pnpm", "run", "dev"]
+
+  database:
+    container_name: db-dev
+    image: postgres:18
+    working_dir: /app
+    environment:
+      POSTGRES_DB: personal-finance-app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
