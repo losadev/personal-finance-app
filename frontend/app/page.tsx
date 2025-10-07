@@ -17,7 +17,7 @@ export default function Home() {
         <StatCard
           amount="$4,386.00"
           title="Current balance"
-          className="bg-[var(--color-gray-900)] text-[var(--color-white-app)]"
+          className="bg-[var(--color-gray-900-app)] text-[var(--color-white-app)]"
         />
         <StatCard
           amount="$4,386.00"

@@ -33,8 +33,7 @@
   --color-white-app: #ffffff;
 
   /* === Tipografía (Public Sans) === */
-  --font-sans-app:
-    "Public Sans", ui-sans-serif, system-ui, -apple-system,
+  --font-sans-app: "Public Sans", ui-sans-serif, system-ui, -apple-system,
     Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-weight-regular: 400;
@@ -107,4 +106,8 @@
   line-height: var(--leading-150);
   letter-spacing: var(--tracking-0);
   font-weight: var(--font-weight-bold);
+}
+
+.menu-side-bar {
+  @apply px-8 py-4 flex gap-4 hover:bg-[var(--color-beige-100-app)] rounded-r-lg hover:border-l-6 hover:border-l-[var(--color-green-app)] hover:text-[var(--color-gray-900-app)] cursor-pointer;
 }
