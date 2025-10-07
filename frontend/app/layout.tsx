@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
-import SideBar from "@/components/ui/sidebar/SideBar";
+import NavBar from "@/components/ui/navbar/NavBar";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -20,10 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${publicSans.variable} antialiased grid grid-cols-[auto_1fr] overflow-auto`}>
+      <body
+        className={`${publicSans.variable} h-dvh antialiased grid lg:grid-cols-[auto_1fr] grid-cols-1 pb-12 lg:pb-0`}
+      >
         {/* <SideBar /> */}
-        <SideBar />
-        {children}
+        <NavBar />
+        <div className="relative overflow-y-scroll">{children}</div>
       </body>
     </html>
   );

@@ -6,7 +6,7 @@ import TransactionsCard from "@/components/ui/overview/TransactionsCard";
 
 export default function Home() {
   return (
-    <div className="bg-[var(--color-beige-100-app)] min-h-screen py-6 px-4 grid grid-rows-[auto_auto_1fr] gap-8">
+    <div className="bg-[var(--color-beige-100-app)] py-6 px-4 grid grid-rows-[auto_auto_1fr] gap-8">
       <div>
         <h1 className=" text-[var(--color-gray-900-app)] text-preset-1">
           Overview

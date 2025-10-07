@@ -11,7 +11,7 @@ const PotsCard = () => {
         <ButtonTerciary text="See details" />
       </div>
       <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-5">
-        <div className="md:col-start-1 md:col-end-1 bg-[var(--color-beige-100-app)] p-4 rounded-lg flex gap-4 items-center">
+        <div className="md:col-start-1 md:col-end-1 bg-[var(--color-beige-100-app)] p-4 rounded-lg flex gap-4 items-center min-w-38">
           <Image
             alt=""
             src={"/assets/images/icon-pot.svg"}

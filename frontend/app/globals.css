@@ -33,7 +33,8 @@
   --color-white-app: #ffffff;
 
   /* === Tipografía (Public Sans) === */
-  --font-sans-app: "Public Sans", ui-sans-serif, system-ui, -apple-system,
+  --font-sans-app:
+    "Public Sans", ui-sans-serif, system-ui, -apple-system,
     Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-weight-regular: 400;
@@ -108,6 +109,15 @@
   font-weight: var(--font-weight-bold);
 }
 
-.menu-side-bar {
-  @apply px-8 py-4 flex gap-4 hover:bg-[var(--color-beige-100-app)] rounded-r-lg hover:border-l-6 hover:border-l-[var(--color-green-app)] hover:text-[var(--color-gray-900-app)] cursor-pointer;
+.navbar {
+  @apply bg-[var(--color-gray-900-app)] px-4 pt-2 flex fixed w-full z-10 bottom-0 rounded-t-lg lg:static lg:flex lg:flex-col lg:rounded-t-none lg:rounded-r-lg lg:px-0 lg:gap-6 lg:pb-6;
+}
+.navbar-ul {
+  @apply flex text-[var(--color-gray-300-app)] w-full lg:flex-col lg:flex-1  lg:pr-6;
+}
+.navbar-li {
+  @apply flex flex-col gap-2 flex-1 items-center py-2 pb-3 border-b-4 hover:text-[var(--color-gray-900-app)] border-[var(--color-gray-900-app)] hover:bg-[var(--color-beige-100-app)] hover:border-[var(--color-green-app)] lg:flex-row lg:gap-4 lg:flex-0 lg:border-b-0 lg:border-l-4 lg:hover:border-l-[var(--color-green-app)] lg:px-8 lg:py-4 lg:rounded-r-lg;
+  span {
+    @apply hidden md:block md:text-preset-5-bold;
+  }
 }
