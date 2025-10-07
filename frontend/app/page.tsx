@@ -31,7 +31,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex flex-col gap-4 lg:grid lg:">
+      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_auto]">
         {/* POTS */}
         <PotsCard />
         {/* TRANSACTIONS */}
