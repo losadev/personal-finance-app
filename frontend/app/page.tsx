@@ -31,15 +31,19 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_auto]">
-        {/* POTS */}
-        <PotsCard />
-        {/* TRANSACTIONS */}
-        <TransactionsCard />
-        {/*  BUDGETS */}
-        <BudgetCard />
-        {/* RECURRENT BILLS CARD */}
-        <RecurringBillsCard />
+      <div className="flex flex-col gap-6 lg:flex-row">
+        <div className="space-y-6 flex-1 h-full">
+          {/* POTS */}
+          <PotsCard />
+          {/* TRANSACTIONS */}
+          <TransactionsCard />
+        </div>
+        <div className="space-y-6 flex-1 h-full">
+          {/*  BUDGETS */}
+          <BudgetCard />
+          {/* RECURRENT BILLS CARD */}
+          <RecurringBillsCard />
+        </div>
       </div>
     </div>
   );

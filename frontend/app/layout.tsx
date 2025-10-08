@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/ui/navbar/NavBar";
+import NavBar from "@/components/ui/NavBar";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",

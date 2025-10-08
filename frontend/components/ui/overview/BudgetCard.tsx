@@ -14,7 +14,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const BudgetCard = () => {
   return (
-    <section className="bg-[var(--color-white-app)] py-6 px-5 md:p-8 rounded-lg space-y-5 lg:row-start-1 lg:col-start-2">
+    <section className="bg-[var(--color-white-app)] py-6 px-5 md:p-8 rounded-lg space-y-5 lg:row-start-1 lg:col-start-2 lg:p-8">
       <div className="flex justify-between items-center">
         <h1 className="text-preset-2">Budgets</h1>
         <ButtonTerciary text="View all" />

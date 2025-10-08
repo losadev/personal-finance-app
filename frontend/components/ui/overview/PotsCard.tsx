@@ -5,7 +5,7 @@ import ButtonTerciary from "../ButtonTerciary";
 
 const PotsCard = () => {
   return (
-    <section className="py-6 px-5 bg-[#ffffff] rounded-lg space-y-5">
+    <section className="py-6 px-5 bg-[#ffffff] rounded-lg space-y-5 lg:p-8">
       <div className="flex justify-between items-center">
         <h1 className="text-preset-2">Pots</h1>
         <ButtonTerciary text="See details" />

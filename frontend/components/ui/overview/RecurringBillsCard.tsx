@@ -23,7 +23,7 @@ const MiniBillCard = (props: Props) => {
 
 const RecurringBillsCard = () => {
   return (
-    <section className="bg-[var(--color-white-app)] py-6 px-5 rounded-lg flex flex-col gap-8 lg:col-start-2 lg:col-end-2 lg:row-start-2">
+    <section className="bg-[var(--color-white-app)] py-6 px-5 rounded-lg flex flex-col gap-8 lg:col-start-2 lg:col-end-2 lg:row-start-2 lg:p-8">
       <div className="flex justify-between items-center">
         <h1 className="text-preset-2">Recurrent Bills</h1>
         <ButtonTerciary text="See details" />
