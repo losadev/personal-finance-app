@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const NavBar = () => {
@@ -31,11 +32,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
+          <Link href="/dashboard" >
           <span
             className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
           >
             Overview
           </span>
+          </Link>
         </li>
         <li className="navbar-li">
           <Image
@@ -44,11 +47,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
+          <Link href="/dashboard/transactions">
           <span
             className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
           >
             Transactions
           </span>
+          </Link>
         </li>
         <li className="navbar-li">
           <Image
@@ -57,11 +62,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
+          <Link href="/dashboard/budgets"  >
           <span
             className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
           >
             Budgets
           </span>
+          </Link>
         </li>
         <li className="navbar-li">
           <Image
@@ -71,11 +78,13 @@ const NavBar = () => {
             height={24}
             className="size-6"
           />
+          <Link href="/dashboard/pots">
           <span
             className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
           >
             Pots
           </span>
+          </Link>
         </li>
         <li className="navbar-li  ">
           <Image
@@ -84,11 +93,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
+          <Link href="/dashboard/recurring-bills" >
           <span
             className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
           >
             Recurring bills
           </span>
+          </Link>
         </li>
       </ul>
       <button

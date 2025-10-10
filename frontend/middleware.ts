@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PROTECTED_PREFIXES = ["/dashboard"];
+const PROTECTED_PREFIXES = ["/dashboard", "/dashboard/transactions", "/dashboard/pots", "/dashboard/recurring-bills", "dashboard/budgets"];
 const PUBLIC_ROUTES = ["/", "signin", "signup"];
 
 export default async function middleware(req: NextRequest) {

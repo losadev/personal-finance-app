@@ -4,7 +4,7 @@ import RecurringBillsCard from "@/components/ui/overview/RecurringBillsCard";
 import StatCard from "@/components/ui/overview/StatCard";
 import TransactionsCard from "@/components/ui/overview/TransactionsCard";
 
-export default function Home() {
+export default function page() {
   return (
     <div className="bg-[var(--color-beige-100-app)] py-6 px-4 grid grid-rows-[auto_auto_1fr] gap-8">
       <div>
