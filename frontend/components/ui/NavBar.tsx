@@ -23,7 +23,7 @@ const NavBar = () => {
           className={`${open ? "hidden" : "block"} mx-auto`}
         />
       </div>
-      <ul className={`navbar-ul ${open ? "":"!pr-0"}`}>
+      <ul className={`navbar-ul ${open ? "" : "!pr-0"}`}>
         <li className="navbar-li">
           <Image
             alt="overview icon"
@@ -31,7 +31,9 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Overview
           </span>
         </li>
@@ -42,7 +44,9 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Transactions
           </span>
         </li>
@@ -53,7 +57,9 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Budgets
           </span>
         </li>
@@ -65,7 +71,9 @@ const NavBar = () => {
             height={24}
             className="size-6"
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Pots
           </span>
         </li>
@@ -76,7 +84,9 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Recurring bills
           </span>
         </li>
