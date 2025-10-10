@@ -21,7 +21,7 @@ function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    const res = await fetch(`http://localhost:3001/api/auth/signin`, {
+    const res = await fetch(`${process.env.NEST_API_URL}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,11 +36,13 @@ function SignInForm() {
     if(res.ok) {
       router.push('/dashboard');
     }
+    
     const responseData = await res.json();
 
-    console.log({res}, responseData.user);
-   
+    return responseData.user;
+  
   };
+  
   return (
     <>
       <div className="bg-[#ffffff] rounded-lg flex flex-col w-full py-6 px-5 gap-8 sm:max-w-xl">
