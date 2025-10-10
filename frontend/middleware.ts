@@ -16,7 +16,7 @@ export default async function middleware(req: NextRequest) {
   let isAuthenticated = false;
   if (token) {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+      const res = await fetch(`http://localhost:3001/api/auth/me`, {
         headers: { cookie: `access_token=${token}` },
         cache: "no-store",
       });
@@ -30,7 +30,7 @@ export default async function middleware(req: NextRequest) {
 
   if (isProtectedRoute && !isAuthenticated) {
     const url = req.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/auth/signin'
     url.searchParams.set('next', pathname)
     return NextResponse.redirect(url)
   }

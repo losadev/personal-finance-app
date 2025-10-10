@@ -1,11 +1,13 @@
 "use client";
 import Input from "@/components/ui/Input";
-import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignInFormValues, signInSchema } from "@/lib/schemas/auth/sign-in";
+import { useRouter } from "next/navigation";
 
 function SignInForm() {
+  const router = useRouter(); // este se utiliza en componente cliente, redirect es para server components
+  
   const {
     control,
     handleSubmit,
@@ -18,8 +20,26 @@ function SignInForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
+    const res = await fetch(`http://localhost:3001/api/auth/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data
+      }),
+      cache: "no-store",
+      credentials: "include",
+    })
+
+    if(res.ok) {
+      router.push('/dashboard');
+    }
+    const responseData = await res.json();
+
+    console.log({res}, responseData.user);
+   
   };
   return (
     <>
@@ -53,7 +73,7 @@ function SignInForm() {
         <p className="w-full text-center leading-1.5 tracking-normal text-[14px] text-[#696868]">
           Need create an account?{" "}
           <a
-            href="/auth/sign-up"
+            href="/auth/signup"
             className="font-bold underline text-[#201F24]"
           >
             Sign up

@@ -10,7 +10,7 @@ type Props = {
 function DashboardRootLayout({children}: Props) {
     const session = verifySession();
     if (!session) {
-        redirect('/signin');
+        redirect('/auth/signin');
     }
   return (
      <main

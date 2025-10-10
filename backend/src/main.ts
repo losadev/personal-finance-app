@@ -3,7 +3,10 @@ import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {cors: true });
+  const app = await NestFactory.create(AppModule, {cors: {
+    origin: process.env.NEXT_BASE_URL || 'http://localhost:3000',
+    credentials: true,
+  } });
   // app.enableCors({
   //   origin: 'http://localhost:3000', // Reemplaza con el origen de tu frontend
   //   credentials: true, // Permite enviar cookies, al poner esto en true, no puedo poner origin: '*'
