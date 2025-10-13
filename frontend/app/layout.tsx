@@ -18,14 +18,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body
-        className={`${publicSans.variable} h-dvh antialiased grid lg:grid-cols-[auto_1fr] grid-cols-1 pb-12 lg:pb-0`}
+        className={`${publicSans.variable} h-dvh antialiased`}
       >
-        {/* <SideBar /> */}
-        <NavBar />
-        <div className="relative overflow-y-scroll">{children}</div>
+        <div>{children}</div>
       </body>
     </html>
   );

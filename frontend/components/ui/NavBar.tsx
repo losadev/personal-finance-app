@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const NavBar = () => {
@@ -23,7 +24,7 @@ const NavBar = () => {
           className={`${open ? "hidden" : "block"} mx-auto`}
         />
       </div>
-      <ul className={`navbar-ul ${open ? "":"!pr-0"}`}>
+      <ul className={`navbar-ul ${open ? "" : "!pr-0"}`}>
         <li className="navbar-li">
           <Image
             alt="overview icon"
@@ -31,9 +32,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <Link href="/dashboard" >
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Overview
           </span>
+          </Link>
         </li>
         <li className="navbar-li">
           <Image
@@ -42,9 +47,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <Link href="/dashboard/transactions">
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Transactions
           </span>
+          </Link>
         </li>
         <li className="navbar-li">
           <Image
@@ -53,9 +62,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <Link href="/dashboard/budgets"  >
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Budgets
           </span>
+          </Link>
         </li>
         <li className="navbar-li">
           <Image
@@ -65,9 +78,13 @@ const NavBar = () => {
             height={24}
             className="size-6"
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <Link href="/dashboard/pots">
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Pots
           </span>
+          </Link>
         </li>
         <li className="navbar-li  ">
           <Image
@@ -76,9 +93,13 @@ const NavBar = () => {
             width={24}
             height={24}
           />
-          <span className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}>
+          <Link href="/dashboard/recurring-bills" >
+          <span
+            className={`menu-bar-span ${open ? "lg:!block" : "lg:!hidden"} md:!block`}
+          >
             Recurring bills
           </span>
+          </Link>
         </li>
       </ul>
       <button
