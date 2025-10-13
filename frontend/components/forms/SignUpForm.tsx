@@ -7,14 +7,18 @@ import { useTransition } from "react";
 import { signUpAction } from "@/app/auth/actions";
 import SpinnerLoader from "../ui/SpinnerLoader";
 
-type SignUpData = Omit<SignUpFormValues, "confirmPassword">
+type SignUpData = Omit<SignUpFormValues, "confirmPassword">;
 
 function SignUpForm() {
   const [isPending, startTransition] = useTransition();
 
-  const { control, handleSubmit, formState: { errors } } = useForm<SignUpFormValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: { name: '', email: '', password: '' },
+    defaultValues: { name: "", email: "", password: "" },
   });
 
   const onSubmit = (data: SignUpData) => {
@@ -63,16 +67,13 @@ function SignUpForm() {
             disabled={isPending}
             className="py-2 min-h-11 text-center bg-[#201F24] hover:bg-[#696868] cursor-pointer w-full text-[#ffffff] rounded-lg text-[14px] leading-1.5 font-bold tracking-normal"
           >
-            {isPending ? <SpinnerLoader text="Sending data"/>: "Sign up"}
+            {isPending ? <SpinnerLoader text="Sending data" /> : "Sign up"}
           </button>
         </form>
 
         <p className="w-full text-center leading-1.5 tracking-normal text-[14px] text-[#696868]">
           Already have an account?{" "}
-          <a
-            href="/auth/signin"
-            className="font-bold underline text-[#201F24]"
-          >
+          <a href="/auth/signin" className="font-bold underline text-[#201F24]">
             Login
           </a>
         </p>

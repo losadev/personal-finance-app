@@ -13,26 +13,32 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signIn({email, password}: LoginDto): Promise<any> {
+  async signIn({ email, password }: LoginDto, res): Promise<any> {
     const user = await this.userService.findOne(email);
-    console.log("Auth service",user)
+
     if (user?.email !== email) {
-      throw new UnauthorizedException("Email is wrong");
+      throw new UnauthorizedException('Email is wrong');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log("Password valid", isPasswordValid)
-    if(!isPasswordValid) {
-      throw new UnauthorizedException("Password is wrong")
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Password is wrong');
     }
-    const payload = {email: user.email};
 
-    const access_token = await this.jwtService.signAsync(payload);
+    const payload = { name: user.name, email: user.email };
 
-    return {
-      access_token,
-      email
-    }
+    const token = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRESIN || '7d',
+    });
+
+     return {
+      token,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+    };
   }
 
   @UsePipes(new ZodValidationPipe(registerSchema))
