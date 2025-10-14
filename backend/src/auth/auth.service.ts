@@ -1,10 +1,11 @@
-import { Injectable, UnauthorizedException, UsePipes } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException, UsePipes } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ZodValidationPipe } from 'src/lib/pipes/zod.pipe';
-import type { LoginDto, RegisterDto } from 'src/schemas/auth.schema';
 import { registerSchema } from 'src/schemas/auth.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
+import { AuthJwtPayload } from 'src/lib/types/user.type';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,36 +14,56 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signIn({ email, password }: LoginDto, res): Promise<any> {
-    const user = await this.userService.findOne(email);
+  async login(user: AuthJwtPayload): Promise<any> {
+    
+    const payload:AuthJwtPayload = { name: user.name, email: user.email, sub: user.sub };
+    
+    return {
+      user: payload,
+      access_token: this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET,
+        expiresIn: process.env.JWT_EXPIRESIN || '1h',
+      })
+    };
 
-    if (user?.email !== email) {
-      throw new UnauthorizedException('Email is wrong');
+  }
+
+  async register(registerDto: RegisterDto) {
+    return await this.userService.create(registerDto);
+  }
+
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new BadRequestException('User not found');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(pass, user?.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Password is wrong');
     }
-
-    const payload = { name: user.name, email: user.email };
-
-    const token = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRESIN || '7d',
-    });
-
-     return {
-      token,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
-    };
+    // If bcrypt.compare succeeded, return user without password
+    const { password, ...result } = user;
+    return result;
   }
 
-  @UsePipes(new ZodValidationPipe(registerSchema))
-  async signUp(registerDto: RegisterDto) {
-    return await this.userService.create(registerDto);
+  async refreshToken(user: any) {
+    try {
+      const payload:AuthJwtPayload = await this.jwtService.verifyAsync(
+        user.refresh_token,
+      );
+      
+      const refresh_token = this.jwtService.sign(payload, {
+        secret: process.env.REFRESH_JWT_SECRET,
+        expiresIn: process.env.REFRESH_JWT_EXPIRESIN || '7d',
+      });
+      
+            return {
+              refresh_token
+            }
+      
+    } catch (error) {
+      throw new UnauthorizedException('Invalid refresh token'); 
+    }
   }
 }

@@ -4,3 +4,11 @@ export type User = {
   email: string;
   password: string;
 };
+
+export type AccessTokenPayload = User;
+
+export type AuthJwtPayload = {
+  sub: string;
+  email: string;
+  name: string;
+};

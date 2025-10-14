@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 
 async function bootstrap() {
+  dotenv.config({ path: './.env' })
   const app = await NestFactory.create(AppModule, {cors: {
     origin: process.env.NEXT_BASE_URL || 'http://localhost:3000',
     credentials: true,
