@@ -1,21 +1,22 @@
+
 import {
-  CanActivate,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
+import { IS_PUBLIC_KEY } from './skipauth.guard';
+import { jwtConstants } from '../constants';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { jwtConstants } from '../constants';
-import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from './skipauth.guard';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-  constructor(
-    private jwtService: JwtService,
-    private reflector: Reflector,
-  ) {}
+export class JwtAuthGuard extends AuthGuard('jwt') {
+     constructor(private reflector: Reflector, private jwtService: JwtService
+    ) {
+    super();
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -35,12 +36,19 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET || jwtConstants.secret,
       });
-      // 💡 We're assigning the payload to the request object here
-      // so that we can access it in our route handlers
+
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException();
     }
     return true;
+  }
+
+  handleRequest(err, user, info) {
+    // You can throw an exception based on either "info" or "err" arguments
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    }
+    return user;
   }
 }

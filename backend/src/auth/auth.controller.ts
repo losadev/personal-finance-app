@@ -1,61 +1,70 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   Post,
-  Req,
   Request,
+  Response,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import type { LoginDto, RegisterDto } from 'src/schemas/auth.schema';
-import { AuthGuard } from './guard/auth.guard';
-import { Response } from '@nestjs/common';
+import type { RegisterDto } from 'src/schemas/auth.schema';
 import { Public } from './guard/skipauth.guard';
+import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { LocalAuthGuard } from './guard/local-auth.guard';
 @Controller('auth') // hace referencia al nombre de la carpeta
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @Post('/signin')
-  async signIn(@Body() signInDto: LoginDto, @Response({passthrough:true}) res) {
-    const {token, user} = await this.authService.signIn(signInDto, res);
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Request() req, @Response({passthrough: true}) res):Promise<any | BadRequestException> {
+    const { access_token } = await this.authService.login(req.user);
 
-    res.cookie('access_token', token, {
+    res.cookie('access_token', access_token, {
       httpOnly: true,
       secure: false, // En producción, usa 'true', en local "false"
       sameSite: 'lax', 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
     });
     
-    return { user };
+    return { user: req.user, access_token };
+  }
+
+  
+  @UseGuards(LocalAuthGuard)
+  @Post('logout')
+  async logout(@Request() req) {
+    return req.logout();
   }
 
   @Public()
-  @Post('/signup')
-  signUp(@Body() signUpDto: RegisterDto) {
-    return this.authService.signUp(signUpDto);
+  @Post('register')
+  register(@Body() signUpDto: RegisterDto) {
+    return this.authService.register(signUpDto);
   }
 
-  @Get('/me')
-  @UseGuards(AuthGuard) // tu guard que verifica el JWT (desde cookie o header)
-  me(@Req() req: Request) {
-    return req['user']; // el payload del JWT (o un user DTO si prefieres)
+  @Get('me')
+  @UseGuards(JwtAuthGuard) // tu guard que verifica el JWT (desde cookie o header)
+  me(@Request() req) {
+    return req.user; // el payload del JWT (o un user DTO si prefieres)
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/')
   getProfile(@Request() req) {
     return req.user;
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/transactions')
   getTransactions(@Request() req) {
     return req.user;
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/pots')
   getPots(@Request() req) {
     return req.user;

@@ -8,7 +8,7 @@ type CreateUser = Omit<User, 'id'>;
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findOne(email: string): Promise<Record<string, any> | null> {
+  async findByEmail(email: string): Promise<Record<string, any> | null> {
     const user = await this.prisma.user.findFirst({
       where: {
         email: {
@@ -21,7 +21,7 @@ export class UserService {
   }
 
   async create(registerDto: CreateUser) {
-    const existingUser = await this.findOne(registerDto.email);
+    const existingUser = await this.findByEmail(registerDto.email);
 
     if (existingUser) {
       throw new ConflictException('Email already registered');
