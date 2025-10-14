@@ -1,4 +1,3 @@
-
 import {
   ExecutionContext,
   Injectable,
@@ -13,8 +12,10 @@ import { Request } from 'express';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-     constructor(private reflector: Reflector, private jwtService: JwtService
-    ) {
+  constructor(
+    private reflector: Reflector,
+    private jwtService: JwtService,
+  ) {
     super();
   }
 
@@ -27,7 +28,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       return true;
     }
 
-    const request:Request = context.switchToHttp().getRequest();
+    const request: Request = context.switchToHttp().getRequest();
     const token = request.cookies?.access_token;
     if (!token) {
       throw new UnauthorizedException();

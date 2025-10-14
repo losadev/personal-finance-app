@@ -13,7 +13,6 @@ import { Public } from './guard/skipauth.guard';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { RegisterDto } from './dto/register.dto';
-import path from 'path';
 @Controller('auth') // hace referencia al nombre de la carpeta
 export class AuthController {
   constructor(private authService: AuthService) {}
