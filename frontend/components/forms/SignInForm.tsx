@@ -21,7 +21,7 @@ function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    const res = await fetch(`${process.env.NEST_API_URL}/auth/signin`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
