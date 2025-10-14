@@ -21,7 +21,7 @@ function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signin`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,6 +32,7 @@ function SignInForm() {
       cache: "no-store",
       credentials: "include",
     })
+
 
     if(res.ok) {
       router.push('/dashboard');

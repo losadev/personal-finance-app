@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { LogoutButton } from "./auth/LogoutButton";
 
 const NavBar = () => {
   const [open, setOpen] = useState<boolean>(true);
@@ -102,6 +103,7 @@ const NavBar = () => {
           </Link>
         </li>
       </ul>
+      <LogoutButton />
       <button
         className={`px-8 py-4 gap-4 text-[var(--color-gray-300-app)] hover:text-[var(--color-gray-100-app)] hidden lg:flex cursor-pointer`}
         aria-label="minimize menu"
