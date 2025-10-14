@@ -9,10 +9,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import type { RegisterDto } from 'src/schemas/auth.schema';
 import { Public } from './guard/skipauth.guard';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { LocalAuthGuard } from './guard/local-auth.guard';
+import { RegisterDto } from './dto/register.dto';
 @Controller('auth') // hace referencia al nombre de la carpeta
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -31,6 +31,12 @@ export class AuthController {
     });
     
     return { user: req.user, access_token };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('refresh')
+  async refreshToken(@Body() body) {
+    return this.authService.refreshToken(body);
   }
 
   

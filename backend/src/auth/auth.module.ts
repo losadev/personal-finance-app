@@ -10,6 +10,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { RefreshJwtStrategy } from './strategies/refresh.strategy';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { JwtAuthGuard } from './guard/jwt-auth.guard';
     AuthService,
     LocalStrategy,
     JwtStrategy,
+    RefreshJwtStrategy,
     {
       provide: APP_GUARD, // ESTO EVITA TENER QUE USAR @UseGuards EN CADA CONTROLADOR
       useClass: JwtAuthGuard,

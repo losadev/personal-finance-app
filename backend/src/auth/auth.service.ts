@@ -1,10 +1,11 @@
 import { BadRequestException, Injectable, UnauthorizedException, UsePipes } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ZodValidationPipe } from 'src/lib/pipes/zod.pipe';
-import type { LoginDto, RegisterDto } from 'src/schemas/auth.schema';
 import { registerSchema } from 'src/schemas/auth.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
+import { AuthJwtPayload } from 'src/lib/types/user.type';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,13 +17,17 @@ export class AuthService {
   async login(user: {id: string, name: string, email: string}): Promise<any> {
     
     const payload = { name: user.name, email: user.email, sub: user.id };
-    console.log("service / login", payload);
+    
     return {
       user: payload,
       access_token: this.jwtService.sign(payload, {
         secret: process.env.JWT_SECRET,
-        expiresIn: process.env.JWT_EXPIRESIN || '7d',
-      }),
+        expiresIn: process.env.JWT_EXPIRESIN || '1h',
+      })
+      // refresh_token: this.jwtService.sign(payload, {
+      //   secret: process.env.REFRESH_JWT_SECRET,
+      //   expiresIn: process.env.REFRESH_JWT_EXPIRESIN || '7d',
+      // })
     };
 
   }
@@ -46,5 +51,25 @@ export class AuthService {
     // If bcrypt.compare succeeded, return user without password
     const { password, ...result } = user;
     return result;
+  }
+
+  async refreshToken(user: any) {
+    try {
+      const payload:AuthJwtPayload = await this.jwtService.verifyAsync(
+        user.refresh_token,
+      );
+      
+      const refresh_token = this.jwtService.sign(payload, {
+        secret: process.env.REFRESH_JWT_SECRET,
+        expiresIn: process.env.REFRESH_JWT_EXPIRESIN || '7d',
+      });
+      
+            return {
+              refresh_token
+            }
+      
+    } catch (error) {
+      throw new UnauthorizedException('Invalid refresh token'); 
+    }
   }
 }
