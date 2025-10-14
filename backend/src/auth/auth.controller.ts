@@ -13,6 +13,7 @@ import { Public } from './guard/skipauth.guard';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { RegisterDto } from './dto/register.dto';
+import path from 'path';
 @Controller('auth') // hace referencia al nombre de la carpeta
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -28,6 +29,7 @@ export class AuthController {
       secure: false, // En producción, usa 'true', en local "false"
       sameSite: 'lax', 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      path: '/', // Asegura que la cookie esté disponible en toda la aplicación
     });
     
     return { user: req.user, access_token };
@@ -40,10 +42,12 @@ export class AuthController {
   }
 
   
-  @UseGuards(LocalAuthGuard)
+  @Public()
   @Post('logout')
-  async logout(@Request() req) {
-    return req.logout();
+  async logout(@Response({ passthrough: true }) res) {
+    // Clear the cookie set on login
+    res.clearCookie('access_token', { httpOnly: true, secure: false, sameSite: 'lax', path:'/' });
+    return { ok: true, message: 'Logged out successfully' };
   }
 
   @Public()

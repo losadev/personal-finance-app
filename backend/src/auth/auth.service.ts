@@ -14,9 +14,9 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(user: {id: string, name: string, email: string}): Promise<any> {
+  async login(user: AuthJwtPayload): Promise<any> {
     
-    const payload = { name: user.name, email: user.email, sub: user.id };
+    const payload:AuthJwtPayload = { name: user.name, email: user.email, sub: user.sub };
     
     return {
       user: payload,
@@ -24,22 +24,16 @@ export class AuthService {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRESIN || '1h',
       })
-      // refresh_token: this.jwtService.sign(payload, {
-      //   secret: process.env.REFRESH_JWT_SECRET,
-      //   expiresIn: process.env.REFRESH_JWT_EXPIRESIN || '7d',
-      // })
     };
 
   }
 
-  @UsePipes(new ZodValidationPipe(registerSchema))
   async register(registerDto: RegisterDto) {
     return await this.userService.create(registerDto);
   }
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    console.log("service / validateUser", user);
     if (!user) {
       throw new BadRequestException('User not found');
     }
