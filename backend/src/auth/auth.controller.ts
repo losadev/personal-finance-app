@@ -20,17 +20,20 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req, @Response({passthrough: true}) res):Promise<any | BadRequestException> {
+  async login(
+    @Request() req,
+    @Response({ passthrough: true }) res,
+  ): Promise<any | BadRequestException> {
     const { access_token } = await this.authService.login(req.user);
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
       secure: false, // En producción, usa 'true', en local "false"
-      sameSite: 'lax', 
+      sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
       path: '/', // Asegura que la cookie esté disponible en toda la aplicación
     });
-    
+
     return { user: req.user, access_token };
   }
 
@@ -40,12 +43,16 @@ export class AuthController {
     return this.authService.refreshToken(body);
   }
 
-  
   @Public()
   @Post('logout')
   async logout(@Response({ passthrough: true }) res) {
     // Clear the cookie set on login
-    res.clearCookie('access_token', { httpOnly: true, secure: false, sameSite: 'lax', path:'/' });
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      path: '/',
+    });
     return { ok: true, message: 'Logged out successfully' };
   }
 

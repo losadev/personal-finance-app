@@ -2,7 +2,7 @@ import BudgetCard from "@/components/ui/overview/BudgetCard";
 import PotsCard from "@/components/ui/overview/PotsCard";
 import RecurringBillsCard from "@/components/ui/overview/RecurringBillsCard";
 import StatCard from "@/components/ui/overview/StatCard";
-import TransactionsCard from "@/components/ui/overview/TransactionsCard";
+import TransactionsCard from "@/components/transactions/TransactionsCard";
 
 export default function page() {
   return (

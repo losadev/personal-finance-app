@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 function page({}: Props) {
-  return (
-    <div>Recurring bills</div>
-  )
+  return <div>Recurring bills</div>;
 }
 
-export default page
+export default page;

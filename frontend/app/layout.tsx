@@ -18,12 +18,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="en">
-      <body
-        className={`${publicSans.variable} h-dvh antialiased`}
-      >
+      <body className={`${publicSans.variable} h-dvh antialiased`}>
         <div>{children}</div>
       </body>
     </html>

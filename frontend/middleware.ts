@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PROTECTED_PREFIXES = ["/dashboard", "/dashboard/transactions", "/dashboard/pots", "/dashboard/recurring-bills", "dashboard/budgets"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/dashboard/transactions",
+  "/dashboard/pots",
+  "/dashboard/recurring-bills",
+  "dashboard/budgets",
+];
 const PUBLIC_ROUTES = ["/", "signin", "signup"];
 
 export default async function middleware(req: NextRequest) {
@@ -20,25 +26,24 @@ export default async function middleware(req: NextRequest) {
         headers: { cookie: `access_token=${token}` },
         cache: "no-store",
       });
-        
-    isAuthenticated = res.ok;
-        
+
+      isAuthenticated = res.ok;
     } catch {
-        isAuthenticated = false;
+      isAuthenticated = false;
     }
   }
 
   if (isProtectedRoute && !isAuthenticated) {
-    const url = req.nextUrl.clone()
-    url.pathname = '/auth/signin'
-    url.searchParams.set('next', pathname)
-    return NextResponse.redirect(url)
+    const url = req.nextUrl.clone();
+    url.pathname = "/auth/signin";
+    url.searchParams.set("next", pathname);
+    return NextResponse.redirect(url);
   }
 
-  if (isPublicRoute && isAuthenticated && !pathname.startsWith('/dashboard')) {
-    const url = req.nextUrl.clone()
-    url.pathname = '/dashboard'
-    return NextResponse.redirect(url)
+  if (isPublicRoute && isAuthenticated && !pathname.startsWith("/dashboard")) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
@@ -46,5 +51,5 @@ export default async function middleware(req: NextRequest) {
 
 // Routes Middleware should not run on
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-}
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+};

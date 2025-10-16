@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 function SignInForm() {
   const router = useRouter(); // este se utiliza en componente cliente, redirect es para server components
-  
+
   const {
     control,
     handleSubmit,
@@ -21,29 +21,30 @@ function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+        }),
+        cache: "no-store",
+        credentials: "include",
       },
-      body: JSON.stringify({
-        ...data
-      }),
-      cache: "no-store",
-      credentials: "include",
-    })
+    );
 
-
-    if(res.ok) {
-      router.push('/dashboard');
+    if (res.ok) {
+      router.push("/dashboard");
     }
-    
+
     const responseData = await res.json();
 
     return responseData.user;
-  
   };
-  
+
   return (
     <>
       <div className="bg-[#ffffff] rounded-lg flex flex-col w-full py-6 px-5 gap-8 sm:max-w-xl">
@@ -75,10 +76,7 @@ function SignInForm() {
 
         <p className="w-full text-center leading-1.5 tracking-normal text-[14px] text-[#696868]">
           Need create an account?{" "}
-          <a
-            href="/auth/signup"
-            className="font-bold underline text-[#201F24]"
-          >
+          <a href="/auth/signup" className="font-bold underline text-[#201F24]">
             Sign up
           </a>
         </p>
