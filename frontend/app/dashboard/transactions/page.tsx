@@ -19,7 +19,7 @@ function page() {
               height={20}
             />
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 md:hidden">
             {/* Filters */}
             <Image
               alt="sort"
@@ -33,6 +33,22 @@ function page() {
               width={20}
               height={20}
             />
+          </div>
+          <div className="gap-2 items-center hidden md:flex">
+            <fieldset className="flex gap-2 items-center">
+              <label htmlFor="sort-by">Sort by</label>
+              <select aria-label="sort-by" name="sort-by" id="sort-by" className="border rounded-lg py-3 px-4">
+                <option value="latest">Latest</option>
+                <option value="Newest"></option>
+              </select>
+            </fieldset>
+            <fieldset className="flex gap-2 items-center">
+              <label htmlFor="category">Category</label>
+              <select aria-label="category" name="category" id="category" className="border rounded-lg py-3 px-4">
+                <option value="all">All transactions</option>
+                
+              </select>
+            </fieldset>
           </div>
         </div>
         <div className="h-full">
