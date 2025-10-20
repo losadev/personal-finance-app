@@ -18,12 +18,17 @@ model User {
   name      String
   email     String   @unique
   password  String
+  budgets   Budget[]
   createdAt DateTime @default(now())
 }
+
+// Relaciones: author   Modelo @relation(fields: [<nombre de columna>], references: [id])
 
 model Budget {
   id        String @id @default(uuid())
   category  String
   max_spend String
   theme     String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
 }
