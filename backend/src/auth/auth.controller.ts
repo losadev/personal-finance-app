@@ -34,7 +34,7 @@ export class AuthController {
       path: '/', // Asegura que la cookie esté disponible en toda la aplicación
     });
 
-    return { user: req.user, access_token };
+    return { access_token };
   }
 
   @UseGuards(JwtAuthGuard)

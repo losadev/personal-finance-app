@@ -20,3 +20,10 @@ model User {
   password  String
   createdAt DateTime @default(now())
 }
+
+model Budget {
+  id        String @id @default(uuid())
+  category  String
+  max_spend String
+  theme     String
+}
