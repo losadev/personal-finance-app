@@ -69,4 +69,11 @@ export class BudgetService {
 
     return this.prisma.budget.update({ where: { id }, data });
   }
+
+  /**
+   * Crea un nuevo budget.
+   */
+  async create(data: { category: string; max_spend: string; theme: string; userId: string }) {
+    return this.prisma.budget.create({ data });
+  }
 }

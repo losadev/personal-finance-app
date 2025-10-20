@@ -7,9 +7,11 @@ import {
   Delete,
   Put,
   Body,
+  Post,
 } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { CreateBudgetDto } from './dto/create-budget.dto';
 
 @Controller('budgets')
 export class BudgetController {
@@ -45,6 +47,14 @@ export class BudgetController {
       throw new NotFoundException('Budget not found');
     }
     return { ok: true };
+  }
+
+  @Post()
+  async create(
+    @Body() body: CreateBudgetDto,
+  ) {
+    const created = await this.service.create(body as any);
+    return created;
   }
 
   @Put(':id')
