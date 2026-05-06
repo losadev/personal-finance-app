@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BalanceController;
+use App\Http\Controllers\PotController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BudgetController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -9,68 +13,43 @@ Route::get('/user', function (Request $request) {
 
 // TRANSACTIONS APIs
 
-Route::get('/transactions', function(Request $request) {
-    return 'hola';
-});
+Route::get('/transactions', [TransactionController::class, 'index']);
 
 // Budgets APIs
 
-Route::delete('/budgets/{id}', function(string $id) {
-    return 'Budget  deleted: ' .  $id;
-});
+Route::controller(BudgetController::class)->group(function() {
 
+    Route::delete('/budgets/{id}','destroy');
 
-Route::get('/budgets', function(Request $request) {
-    return 'Budgets';
-});
+    Route::get('/budgets', 'index');
 
+    Route::get('/budgets/{id}/transactions', 'getLastThreeByCategory');
 
-Route::get('/budgets/{id}/transactions', function(Request $request, string $id) {
-    return 'Last 3 transactions: '. $id;
-});
+    Route::patch('/budgets/{id}', 'edit');
 
-Route::patch('/budgets/{id}', function(Request $request, string $id) {
-    return 'Budget modificado: '. $id;
-});
-
-Route::post('/budgets', function(Request $request) {
-    return 'Budget creado';
+    Route::post('/budgets','store');
 });
 
 
 // Pots APIs
+Route::controller(PotController::class)->group(function() {
 
-Route::delete('/pots/{id}', function(string $id) {
-    return 'Pots  deleted: ' .  $id;
-});
+    Route::delete('/pots/{id}', 'destroy');
 
+    Route::get('/pots', 'index');
 
-Route::get('/pots', function(Request $request) {
-    return 'Pots';
-});
+    Route::patch('/pots/{id}','edit');
 
-Route::patch('/pots/{id}', function(Request $request, string $id) {
-    return 'Pot modificado: '. $request->id;
-});
+    Route::post('/pots', 'store');
 
-Route::post('/pots', function(Request $request) {
-    return 'Pot creado';
-});
+    Route::post('/pots/{id}/money', 'addMoney');
 
-Route::post('/pots/{id}/money', function(Request $request, string $id) {
-    return 'Dinero añadido';
-});
-
-Route::post('/pots/{id}/withdraw', function(Request $request) {
-    return 'Dinero acado';
+    Route::post('/pots/{id}/withdraw','withdrawMoney');
 });
 
 // Balances APIs
 
-Route::get('/balances/{id}', function(string $id) {
-    return 'Balance obtenido' . $id;
-});
-
-Route::get('/balances/{id}', function(Request $request) {
-    return 'Balance modificado: ' . $request->id;
+Route::controller(BalanceController::class)->group(function() {
+    Route::get('/balances/{id}','show');
+    Route::patch('/balances/{id}', 'update');
 });

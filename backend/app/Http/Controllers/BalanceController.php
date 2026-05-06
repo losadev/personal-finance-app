@@ -12,7 +12,7 @@ class BalanceController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -28,15 +28,15 @@ class BalanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Balance $balance)
+   public function show(string $id)
     {
-        //
+        $balance = Balance::findOrFail($id);
+        return response()->json($balance, 200);
     }
 
     /**
@@ -47,12 +47,14 @@ class BalanceController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Balance $balance)
-    {
-        //
+    public function update(Request $request, string $id) {
+        $money = $request->money;
+
+        $currentBalance = Balance::findOrFail($id);
+
+        $x = $currentBalance->update(['income' => $money]);
+
+        return response()->json($x, 200);
     }
 
     /**
