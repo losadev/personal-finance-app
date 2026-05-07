@@ -14,7 +14,9 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //
+        $budgets = Budget::all();
+
+        return response()->json(['success' => true, 'data' => $budgets], 200);
     }
 
     /**
@@ -59,7 +61,7 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-        //
+        return $budget;
     }
 
     /**
@@ -83,6 +85,7 @@ class BudgetController extends Controller
      */
     public function destroy(Budget $budget)
     {
-        //
+        $budget->delete();
+        return response()->json(['success' => true, 'message' => 'Budget deleted successfully'], 204);
     }
 }

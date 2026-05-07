@@ -19,7 +19,9 @@ Route::get('/transactions', [TransactionController::class, 'index']);
 
 Route::controller(BudgetController::class)->group(function() {
 
-    Route::delete('/budgets/{id}','destroy');
+    Route::delete('/budgets/{budget}','destroy');
+
+    Route::get('/budgets/{budget}', 'show');
 
     Route::get('/budgets', 'index');
 
