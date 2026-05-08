@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePotRequest;
 use App\Models\Pot;
 use Illuminate\Http\Request;
 
@@ -26,15 +27,9 @@ class PotController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePotRequest $request)
     {
-         $validated = $request->validate([
-            'user_id' => 'required',
-            'name' => 'required',
-            'target' => 'required',
-            'total' => 'required',
-            'theme' => 'required'
-        ]);
+         $validated = $request->validated();
 
         try {
             $pot = Pot::create($validated);
@@ -81,6 +76,8 @@ class PotController extends Controller
      */
     public function destroy(Pot $pot)
     {
-        //
+        $pot->delete();
+
+
     }
 }

@@ -12,7 +12,7 @@ class StorePotRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,11 @@ class StorePotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required',
+            'name' => 'required',
+            'target' => 'required',
+            'total' => 'required',
+            'theme' => 'required'
         ];
     }
 }
