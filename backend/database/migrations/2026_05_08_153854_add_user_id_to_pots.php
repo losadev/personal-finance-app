@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pots', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 100);
-            $table->decimal('target', 8,2);
-            $table->decimal('total', 8,2);
-            $table->string('theme', 10);
-            $table->timestamps();
+        Schema::table('pots', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pots');
+        Schema::table('pots', function (Blueprint $table) {
+            //
+        });
     }
 };

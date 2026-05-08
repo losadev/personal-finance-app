@@ -20,7 +20,7 @@ class PotController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -28,7 +28,28 @@ class PotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+            'user_id' => 'required',
+            'name' => 'required',
+            'target' => 'required',
+            'total' => 'required',
+            'theme' => 'required'
+        ]);
+
+        try {
+            $pot = Pot::create($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Pot created successfully',
+                'data'    => $pot,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating pot' . $e,
+            ], 500);
+        }
     }
 
     /**
