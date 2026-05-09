@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddMoneyToPotRequest;
 use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
+use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Http\Resources\PotCollection;
 use App\Models\Pot;
 use Illuminate\Http\Request;
@@ -16,15 +17,7 @@ class PotController extends Controller
      */
     public function index()
     {
-        return  Pot::all()->where('user_id', 53);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
+        return  Pot::all()->where('user_id', 50);
     }
 
     /**
@@ -50,22 +43,6 @@ class PotController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pot $pot)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pot $pot)
-    {
-        //
-    }
-
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
 
         $pot->total += $request->validated('money');
@@ -75,8 +52,12 @@ class PotController extends Controller
         return response()->json(['success' => true, 'data' => $pot]);
     }
 
-    public function withdrawMoney() {
+    public function withdrawMoney(WithdrawMoneyFromPotRequest $request , Pot $pot) {
+        $pot->total -= $request->validated('money');
 
+        $pot->save();
+
+        return response()->json(['success' => true, 'data' => $pot]);
     }
 
     /**

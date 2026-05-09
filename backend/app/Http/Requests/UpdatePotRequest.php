@@ -26,7 +26,6 @@ class UpdatePotRequest extends FormRequest
             'user_id' => 'required',
             'name' => 'required',
             'target' => 'required',
-            'total' => 'required',
             'theme' => 'required'
         ];
     }

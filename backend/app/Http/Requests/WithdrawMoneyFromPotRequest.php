@@ -12,7 +12,7 @@ class WithdrawMoneyFromPotRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,8 @@ class WithdrawMoneyFromPotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|number',
-            'money' => 'required|number'
+            'user_id' => 'required',
+            'money' => 'required'
         ];
     }
 }
