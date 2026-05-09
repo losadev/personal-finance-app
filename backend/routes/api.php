@@ -36,17 +36,17 @@ Route::controller(BudgetController::class)->group(function() {
 // Pots APIs
 Route::controller(PotController::class)->group(function() {
 
-    Route::delete('/pots/{id}', 'destroy');
+    Route::delete('/pots/{pot}', 'destroy');
 
     Route::get('/pots', 'index');
 
-    Route::patch('/pots/{id}','edit');
+    Route::patch('/pots/{pot}','update');
 
     Route::post('/pots', 'store');
 
-    Route::post('/pots/{id}/money', 'addMoney');
+    Route::patch('/pots/{pot}/money', 'addMoney');
 
-    Route::post('/pots/{id}/withdraw','withdrawMoney');
+    Route::patch('/pots/{pot}/withdraw','withdrawMoney');
 });
 
 // Balances APIs

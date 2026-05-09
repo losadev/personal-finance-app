@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePotRequest;
+use App\Http\Requests\UpdatePotRequest;
+use App\Http\Resources\PotCollection;
 use App\Models\Pot;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class PotController extends Controller
      */
     public function index()
     {
-        //
+        return  Pot::all()->where('user_id', 53);
     }
 
     /**
@@ -63,12 +65,22 @@ class PotController extends Controller
         //
     }
 
+    public function addMoney(Request $request, Pot $pot) {
+
+    }
+
+    public function withdrawMoney() {
+
+    }
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pot $pot)
+    public function update(UpdatePotRequest $request, Pot $pot)
     {
-        //
+        $pot->update($request->validated());
+
+        return response()->json(['success' => true, 'data' => $pot]);
     }
 
     /**
@@ -78,6 +90,6 @@ class PotController extends Controller
     {
         $pot->delete();
 
-
+        return response()->noContent();
     }
 }
