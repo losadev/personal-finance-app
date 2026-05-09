@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddMoneyToPotRequest;
 use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
 use App\Http\Resources\PotCollection;
@@ -65,8 +66,13 @@ class PotController extends Controller
         //
     }
 
-    public function addMoney(Request $request, Pot $pot) {
+    public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
 
+        $pot->total += $request->validated('money');
+
+        $pot->save();
+
+        return response()->json(['success' => true, 'data' => $pot]);
     }
 
     public function withdrawMoney() {
