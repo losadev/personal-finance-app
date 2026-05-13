@@ -10,6 +10,17 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'budget_id',
+        'avatar',
+        'name',
+        'category',
+        'date',
+        'amount',
+        'recurring'
+    ];
+
     public function budget(): BelongsTo {
         return $this->belongsTo(Budget::class);
     }

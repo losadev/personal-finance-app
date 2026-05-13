@@ -15,6 +15,8 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/transactions', [TransactionController::class, 'index']);
 
+Route::get('/transactions', [TransactionController::class, 'getRecurringBills']);
+
 // Budgets APIs
 
 Route::controller(BudgetController::class)->group(function() {

@@ -21,4 +21,20 @@ class TransactionController extends Controller
         return response()->json($transactions, 200);
     }
 
+    public function getRecurringBills() {
+        $recurrentTransactions = Transaction::where('recurring','=',true)->where('user_id', 53);
+
+        if(!$recurrentTransactions) {
+            return response()->json([
+                'message' => 'No recurrent transactions available',
+                'success' => false
+                ], 404);
+        }
+
+        return response()->json([
+            'data' => $recurrentTransactions,
+            'success' => true
+        ], 200);
+    }
+
 }
