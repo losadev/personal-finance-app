@@ -25,22 +25,14 @@ class PotController extends Controller
      */
     public function store(StorePotRequest $request)
     {
-         $validated = $request->validated();
 
-        try {
-            $pot = Pot::create($validated);
+        $pot = Pot::create($request->validatet());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Pot created successfully',
-                'data'    => $pot,
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error creating pot' . $e,
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Pot created successfully',
+            'data'    => $pot,
+        ], 201);
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {

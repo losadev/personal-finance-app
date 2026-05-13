@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePotRequest extends FormRequest
+class StoreBudgetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class UpdatePotRequest extends FormRequest
     {
         return [
             'user_id' => 'required|numeric',
-            'name' => 'sometimes',
-            'target' => 'sometimes|numeric',
-            'theme' => 'sometimes'
+            'category' => 'required|string',
+            'maximum' => 'required|numeric',
+            'theme' => 'required|string',
         ];
     }
 }

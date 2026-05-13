@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Model\Tests;
+use App\Models\Budget;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        //$this->app->bind();
     }
 
     /**
@@ -19,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Budget::shouldBeStrict(!app()->isProduction());
     }
 }

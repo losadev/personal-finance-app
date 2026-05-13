@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBudgetRequest;
+use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
-use App\Models\User;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Http\Request;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 
 class BudgetController extends Controller
 {
@@ -14,70 +15,60 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        $budgets = Budget::all();
+        $budgets = Budget::where('user_id', 53)->get();
+
+        if($budgets->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'Budgets not found'], 404);
+        }
 
         return response()->json(['success' => true, 'data' => $budgets], 200);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBudgetRequest $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required',
-            'category' => 'required',
-            'maximum' => 'required',
-            'theme' => 'required'
-        ]);
 
         try {
             // Create devuelve el modelo, no false/true
-            $budget = Budget::create($validated);
+            // save() si devuelve true/false
+            $budget = Budget::create($request->validated());
 
             return response()->json([
                 'success' => true,
                 'message' => 'Budget created successfully',
                 'data'    => $budget,
             ], 201);
-        } catch (\Exception $e) {
+
+        } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error creating budget',
+                'message' => $th->getMessage(),
             ], 500);
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Budget $budget)
-    {
-        return $budget;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Budget $budget)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Budget $budget)
+    public function update(UpdateBudgetRequest $request, Budget $budget)
     {
-        //
+        $updated = $budget->update($request->validated());
+
+        if(!$updated) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating budget',
+            ], 500);
+        }
+
+        return response()->json([
+                'success' => true,
+                'message' => 'Budget updated successfully',
+                'data' => $budget
+        ]);
     }
 
     /**
@@ -87,5 +78,20 @@ class BudgetController extends Controller
     {
         $budget->delete();
         return response()->json(['success' => true, 'message' => 'Budget deleted successfully'], 204);
+    }
+
+    public function getTransactionsByCategory() {
+
+        $budgets = Budget::select('id', 'category')
+    ->with('transactions')
+    ->get()
+    ->map(function ($budget) {
+        $budget->transactions = $budget->transactions->take(3);
+        unset($budget->transactions);
+
+        return $budget;
+    });
+
+        return $budgets;
     }
 }

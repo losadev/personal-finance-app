@@ -21,13 +21,11 @@ Route::controller(BudgetController::class)->group(function() {
 
     Route::delete('/budgets/{budget}','destroy');
 
-    Route::get('/budgets/{budget}', 'show');
-
     Route::get('/budgets', 'index');
 
-    Route::get('/budgets/{id}/transactions', 'getLastThreeByCategory');
+    Route::get('/budgets/transactions', 'getTransactionsByCategory');
 
-    Route::patch('/budgets/{id}', 'edit');
+    Route::patch('/budgets/{budget}', 'update');
 
     Route::post('/budgets','store');
 });

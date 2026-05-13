@@ -52,6 +52,7 @@ class BalanceController extends Controller
 
         $currentBalance = Balance::findOrFail($id);
 
+        // devuelve el numero de rows afectadas
         $x = $currentBalance->update(['income' => $money]);
 
         return response()->json($x, 200);

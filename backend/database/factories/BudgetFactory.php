@@ -20,7 +20,7 @@ class BudgetFactory extends Factory
         return [
             'category' => fake()->sentence(),
             'maximum' => fake()->numberBetween(1,1000000),
-            'theme' => fake()->date(),
+            'theme' => fake()->hexColor()
         ];
     }
 }

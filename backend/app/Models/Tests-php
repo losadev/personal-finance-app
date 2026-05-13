@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Model;
+
+
+class Tests {
+    // para cambiar el nombre de la pk
+    protected $primaryKey = 'anotherId';
+    // para indicar que este modelo se debe conectar a otra db
+    protected $connected = 'mysql';
+
+    // valores por defecto de algunos campos de tu modelo
+     protected $attributes = [
+        'options' => '[]',
+        'delayed' => false,
+    ];
+}
