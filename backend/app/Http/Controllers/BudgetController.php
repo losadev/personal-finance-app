@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\BudgetInterface;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
-use App\Models\Transaction;
-use Illuminate\Support\Facades\DB;
 
 class BudgetController extends Controller
 {
-    /**
+
+    public function __construct(protected BudgetInterface $budget) {
+        $this->budget = $budget;
+    }
+   /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $budgets = Budget::where('user_id', 53)->get();
+        $budgets = $this->budget->index();
 
         if($budgets->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'Budgets not found'], 404);
@@ -33,7 +36,7 @@ class BudgetController extends Controller
         try {
             // Create devuelve el modelo, no false/true
             // save() si devuelve true/false
-            $budget = Budget::create($request->validated());
+            $budget = $this->budget->store($request);
 
             return response()->json([
                 'success' => true,
