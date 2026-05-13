@@ -9,6 +9,7 @@ use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Http\Resources\PotCollection;
 use App\Models\Pot;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PotController extends Controller
 {

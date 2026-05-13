@@ -6,6 +6,7 @@ use App\Contracts\BudgetInterface;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
+use Illuminate\Routing\Controller;
 
 class BudgetController extends Controller
 {

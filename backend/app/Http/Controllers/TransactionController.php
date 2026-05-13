@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TransactionController extends Controller
 {
@@ -22,7 +23,7 @@ class TransactionController extends Controller
     }
 
     public function getRecurringBills() {
-        $recurrentTransactions = Transaction::where('recurring','=',true)->where('user_id', 53);
+        $recurrentTransactions = Transaction::where('recurring','=',true)->where('user_id', 83)->get();
 
         if(!$recurrentTransactions) {
             return response()->json([
