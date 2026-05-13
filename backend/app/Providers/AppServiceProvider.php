@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Model\Tests;
+use App\Contracts\BudgetInterface;
+use App\Http\Controllers\BudgetController;
 use App\Models\Budget;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //$this->app->bind();
+        $this->app->bind(BudgetInterface::class, BudgetController::class);
     }
 
     /**
