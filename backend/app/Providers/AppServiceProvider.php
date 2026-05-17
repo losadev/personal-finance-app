@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App\Contracts\BudgetInterface;
 use App\Models\Budget;
+use App\Models\User;
 use App\Repositories\Eloquent\EloquentBudgetRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Budget::shouldBeStrict(!app()->isProduction());
+        Model::shouldBeStrict(true);//  lanza excepcion si hauqe N +1 queries.
+        Route::pattern('id', '[0-9]+'); // esto aplica a todas las rutas con un id por parametro
+        Route::model('user',User::class);
+        // Route::bind('user', function (string $value) {
+        //     return User::where('name', $value)->firstOrFail();
+        // });
     }
 }

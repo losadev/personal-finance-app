@@ -11,7 +11,8 @@ class EloquentBudgetRepository implements BudgetInterface {
 
     public function index()
     {
-        return Budget::where('user_id', 53)->get();
+        // !ª CUIDADO CON UTILIZAR MUCHAS FACADES, SIN DARTES CUENTA METES MULTIPLES CLASES QUE SON COSTOSA, AL APLICAR Inyeccion de dependencias, VISUALMENTE ES MAS FACIL DEVER SI ESTAS CARGANDO UNA CLASE CON MUCHAS CLASES.
+        return Budget::with('transactions')->where('user_id', 53)->get();
     }
 
 

@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 class BudgetController extends Controller
 {
 
+
     public function __construct(protected BudgetInterface $budget) {
         $this->budget = $budget;
     }
@@ -19,7 +20,9 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        $budgets = $this->budget->index();
+        //$budgets = $this->budget->index();
+
+        $budgets = Budget::with('transactions')->get();
 
         if($budgets->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'Budgets not found'], 404);
