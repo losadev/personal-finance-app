@@ -15,7 +15,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
-Route::get('/transactions', [TransactionController::class, 'getRecurringBills'])->name('transactions.getRecurringBills');
+Route::get('/transactions/recurring', [TransactionController::class, 'getRecurringBills'])->name('transactions.getRecurringBills');
 
 // Budgets APIs
 
