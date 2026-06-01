@@ -11,11 +11,11 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = Transaction::where('user_id', 83)->paginate(5);
+        $transactions = Transaction::category($request->category)->sortByDate($request->sort)->where('user_id',83)->get();
 
-        if($transactions->isEmpty()) {
+        if(!$transactions) {
             return response()->json('No transactions available', 404);
         }
 
