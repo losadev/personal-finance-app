@@ -19,8 +19,8 @@ class TransactionFactory extends Factory
     {
         return [
             'avatar' => fake()->imageUrl(),
-            'name' => fake()->sentence(),
-            'category' => fake()->sentence(),
+            'name' => fake()->name(),
+            'category' => fake()->text(20),
             'date' => fake()->dateTimeThisYear(),
             'amount' => fake()->numberBetween(1, 100000),
             'recurring' => fake()->boolean()

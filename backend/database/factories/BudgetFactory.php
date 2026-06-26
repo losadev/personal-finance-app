@@ -18,7 +18,7 @@ class BudgetFactory extends Factory
     public function definition(): array
     {
         return [
-            'category' => fake()->sentence(),
+            'category' => fake()->text(20),
             'maximum' => fake()->numberBetween(1,1000000),
             'theme' => fake()->hexColor()
         ];
