@@ -7,6 +7,7 @@ use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
 use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Models\Pot;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class PotController extends Controller
@@ -27,11 +28,13 @@ class PotController extends Controller
 
         $pot = Pot::create($request->validatet());
 
-        return response()->json([
+        return response()->json(
+            [
             'success' => true,
             'message' => 'Pot created successfully',
             'data'    => $pot,
-        ], 201);
+            ],
+            Response::HTTP_CREATED);
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
@@ -40,7 +43,12 @@ class PotController extends Controller
 
         $pot->save();
 
-        return response()->json(['success' => true, 'data' => $pot]);
+        return response()->json(
+            [
+                'success' => true,
+                'data' => $pot
+            ],
+            Response::HTTP_OK);
     }
 
     public function withdrawMoney(WithdrawMoneyFromPotRequest $request , Pot $pot) {
@@ -48,7 +56,13 @@ class PotController extends Controller
 
         $pot->save();
 
-        return response()->json(['success' => true, 'data' => $pot]);
+        return response()->json(
+            [
+                'success' => true,
+                'data' => $pot
+            ],
+            Response::HTTP_OK
+            );
     }
 
     /**
@@ -66,8 +80,28 @@ class PotController extends Controller
      */
     public function destroy(Pot $pot)
     {
-        $pot->delete();
+        $potToDelete = Pot::find($pot);
 
-        return response()->noContent();
+        if(!$potToDelete) {
+            return response()->json([
+            "message" => 'Pot not found',
+            'success' => false
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $pot->delete();
+            return response()->json([
+                "message" => 'Pot deleted succesfully',
+                'success' => true
+            ], Response::HTTP_NO_CONTENT);
+
+        }catch(\LogicException $le) {
+            return response()->json([
+                "message" => 'Error deleting pot: '. $le->getMessage(),
+                'success' => false
+            ], Response::HTTP_NO_CONTENT);
+        }
+
     }
 }

@@ -25,13 +25,19 @@ class TransactionController extends Controller
         }
 
         if($request->has('sort')) {
-            $query->orderBy('updated_at', $request->input('sort'));
+            $sortParams = explode(',', $request->input('sort'));
+            $query->orderBy($sortParams[0], $sortParams[1]);
         }
 
         $transactions = $query->paginate(10);
 
         if(!$transactions) {
-            return response()->json('No transactions available', Response::HTTP_NOT_FOUND);
+            return response()->json(
+                [
+                'message' => 'No transactions available',
+                'success' => false
+                ],
+                Response::HTTP_NOT_FOUND);
         }
 
         return response()->json($transactions, Response::HTTP_OK);
@@ -41,10 +47,12 @@ class TransactionController extends Controller
         $recurrentTransactions = Transaction::where('recurring','=',true)->where('user_id', 83)->get();
 
         if(!$recurrentTransactions) {
-            return response()->json([
+            return response()->json(
+                [
                 'message' => 'No recurrent transactions available',
                 'success' => false
-                ], Response::HTTP_NOT_FOUND);
+                ],
+                Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
