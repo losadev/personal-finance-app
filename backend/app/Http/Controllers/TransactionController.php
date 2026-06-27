@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,9 +12,23 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = Transaction::all();
+        $query = Transaction::query();
+
+        if($request->has('name')) {
+            $query->where('name','like','%'.$request->input('name').'%');
+        }
+
+        if($request->has('category')) {
+            $query->where('category',$request->input('category'));
+        }
+
+        if($request->has('sort')) {
+            $query->orderBy('updated_at', $request->input('sort'));
+        }
+
+        $transactions = $query->paginate(10);
 
         if(!$transactions) {
             return response()->json('No transactions available', Response::HTTP_NOT_FOUND);
