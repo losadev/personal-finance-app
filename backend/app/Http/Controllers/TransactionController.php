@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransactionController extends Controller
 {
@@ -16,10 +16,10 @@ class TransactionController extends Controller
         $transactions = Transaction::all();
 
         if(!$transactions) {
-            return response()->json('No transactions available', 404);
+            return response()->json('No transactions available', Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json($transactions, 200);
+        return response()->json($transactions, Response::HTTP_OK);
     }
 
     public function getRecurringBills() {
@@ -29,13 +29,13 @@ class TransactionController extends Controller
             return response()->json([
                 'message' => 'No recurrent transactions available',
                 'success' => false
-                ], 404);
+                ], Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
             'data' => $recurrentTransactions,
             'success' => true
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
 }

@@ -12,13 +12,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // TRANSACTIONS APIs
-
-Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+Route::get('/transactions/{page?}/{search?}/{sort?}/{category?}', [TransactionController::class, 'index'])->name('transactions.index');
 
 Route::get('/transactions', [TransactionController::class, 'getRecurringBills'])->name('transactions.getRecurringBills');
 
 // Budgets APIs
-
 Route::controller(BudgetController::class)->group(function() {
 
     Route::delete('/budgets/{budget}','destroy')->name('budgets.destroy');

@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       User::factory(10)
+        User::factory(10)
         ->create()
         ->each(function ($user) {
             Budget::factory(3)
