@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Budget;
+use App\Models\Pot;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,6 +29,8 @@ class DatabaseSeeder extends Seeder
                         'user_id'   => $user->id,
                     ]);
                 });
+            Pot::factory(5)->create(['user_id' => $user->id]);
         });
+
     }
 }

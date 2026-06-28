@@ -14,20 +14,20 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Transaction::query();
-
-        if($request->has('name')) {
-            $query->where('name','like','%'.$request->input('name').'%');
-        }
-
-        if($request->has('category')) {
-            $query->where('category',$request->input('category'));
-        }
-
-        if($request->has('sort')) {
-            $sortParams = explode(',', $request->input('sort'));
-            $query->orderBy($sortParams[0], $sortParams[1]);
-        }
+        $query = Transaction::where(function($query) use($request) {
+            if($request->input('name')) {
+                $query->where('name','like','%'.$request->input('name').'%');
+            }
+        })->where(function($query) use($request) {
+            if($request->input('category')) {
+                $query->where('category',$request->input('category'));
+            }
+        })->where(function($query) use($request) {
+            if($request->input('sort')) {
+                $sortParams = explode(',', $request->input('sort'));
+                $query->orderBy($sortParams[0], $sortParams[1]);
+            }
+        });
 
         $transactions = $query->paginate(10);
 

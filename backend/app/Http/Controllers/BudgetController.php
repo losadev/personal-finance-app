@@ -6,6 +6,7 @@ use App\Contracts\BudgetInterface;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class BudgetController extends Controller
@@ -20,15 +21,13 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //$budgets = $this->budget->index();
-
-        $budgets = Budget::with('transactions')->get();
+        $budgets = Budget::all();
 
         if($budgets->isEmpty()) {
-            return response()->json(['success' => false, 'message' => 'Budgets not found'], 404);
+            return response()->json(['success' => false, 'message' => 'Budgets not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json(['success' => true, 'data' => $budgets], 200);
+        return response()->json(['success' => true, 'data' => $budgets], Response::HTTP_OK);
     }
 
     /**
@@ -38,8 +37,6 @@ class BudgetController extends Controller
     {
 
         try {
-            // Create devuelve el modelo, no false/true
-            // save() si devuelve true/false
             $budget = $this->budget->store($request);
 
             return response()->json([
