@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use ApiFormRequest;
 use Override;
 
-class StorePotRequest extends FormRequest
+class StorePotRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -42,4 +42,5 @@ class StorePotRequest extends FormRequest
             'theme.required' => 'El tema es obligatorio',
         ];
     }
+
 }

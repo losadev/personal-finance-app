@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
+use ApiFormRequest;
 
-class UpdatePotRequest extends FormRequest
+class UpdatePotRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
