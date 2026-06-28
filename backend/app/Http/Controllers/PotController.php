@@ -17,7 +17,7 @@ class PotController extends Controller
      */
     public function index()
     {
-        return  Pot::all()->where('user_id', 50);
+        return  Pot::all()->where('user_id', 1);
     }
 
     /**
@@ -26,8 +26,8 @@ class PotController extends Controller
     public function store(StorePotRequest $request)
     {
 
-        $pot = Pot::create($request->validatet());
-
+    try {
+        $pot = Pot::create($request->validated());
         return response()->json(
             [
             'success' => true,
@@ -35,6 +35,15 @@ class PotController extends Controller
             'data'    => $pot,
             ],
             Response::HTTP_CREATED);
+    } catch (\Throwable $th) {
+        return response()->json(
+            [
+            'success' => false,
+            'message' => 'Error creating Pot: ' . $th->getMessage(),
+            ],
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
@@ -70,9 +79,14 @@ class PotController extends Controller
      */
     public function update(UpdatePotRequest $request, Pot $pot)
     {
-        $pot->update($request->validated());
+        try {
+            $pot->update($request->validated());
 
-        return response()->json(['success' => true, 'data' => $pot]);
+            return response()->json(['success' => true, 'data' => $pot]);
+
+        } catch (\Throwable $th) {
+            return response()->json(['success' => true,'message' => $th->getMessage()],$th->getCode());
+        }
     }
 
     /**

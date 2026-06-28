@@ -12,28 +12,19 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // TRANSACTIONS APIs
-Route::get('/transactions/{page?}/{name?}/{sort?}/{category?}', [TransactionController::class, 'index'])->name('transactions.index');
-Route::get('/transactions', [TransactionController::class, 'getRecurringBills'])->name('transactions.getRecurringBills');
+Route::controller(TransactionController::class)->group(function() {
+    Route::get('/transactions/{page?}/{name?}/{sort?}/{category?}','index')->name('transactions.index');
+    Route::get('/transactions', 'getRecurringBills')->name('transactions.getRecurringBills');
+});
 
 // Budgets APIs
 Route::controller(BudgetController::class)->group(function() {
-
     Route::get('/budgets/transactions', 'getTransactionsByCategory')->name('budgets.getTransactionsByCategory');
 });
 
-
 // Pots APIs
 Route::controller(PotController::class)->name('pots.')->group(function() {
-
-    #Route::delete('/pots/{pot}', 'destroy')->name('destroy');
-    Route::get('/pots', 'index')->name('index');
-
-    Route::patch('/pots/{pot}','update')->name('update');
-
-    Route::post('/pots', 'store')->name('store');
-
     Route::patch('/pots/{pot}/money', 'addMoney')->name('addMoney');
-
     Route::patch('/pots/{pot}/withdraw','withdrawMoney')->name('withdrawMoney');
 });
 
@@ -46,8 +37,4 @@ Route::controller(BalanceController::class)->group(function() {
 });
 
 Route::apiResource("budgets", BudgetController::class);
-// Route::apiResources([
-//     TransactionController::class,
-//     BudgetController::class,
-//     PotController::class
-// ]);
+Route::apiResource('pots', PotController::class);
