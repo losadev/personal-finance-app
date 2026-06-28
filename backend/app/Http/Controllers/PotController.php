@@ -7,8 +7,10 @@ use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
 use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Models\Pot;
+use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\ValidationException;
 
 class PotController extends Controller
 {
@@ -35,11 +37,11 @@ class PotController extends Controller
             'data'    => $pot,
             ],
             Response::HTTP_CREATED);
-    } catch (\Throwable $th) {
+    } catch (Exception $e) {
         return response()->json(
             [
             'success' => false,
-            'message' => 'Error creating Pot: ' . $th->getMessage(),
+            'message' => $e
             ],
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -48,30 +50,48 @@ class PotController extends Controller
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
 
-        $pot->total += $request->validated('money');
+        try {
 
-        $pot->save();
+            $pot->total += $request->validated('money');
+            $pot->save();
 
-        return response()->json(
+            return response()->json(
+                [
+                    'success' => true,
+                    'data' => $pot
+                ],
+                Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response()->json(
             [
-                'success' => true,
-                'data' => $pot
+            'success' => false,
+            'message' => $e
             ],
-            Response::HTTP_OK);
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function withdrawMoney(WithdrawMoneyFromPotRequest $request , Pot $pot) {
-        $pot->total -= $request->validated('money');
 
-        $pot->save();
+        try {
+            $pot->total -= $request->validated('money');
+            $pot->save();
 
-        return response()->json(
+            return response()->json(
+                [
+                    'success' => true,
+                    'data' => $pot
+                ],
+                Response::HTTP_OK
+                );
+        } catch (Exception $e) {
+            return response()->json(
             [
-                'success' => true,
-                'data' => $pot
+            'success' => false,
+            'message' => $e
             ],
-            Response::HTTP_OK
-            );
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -81,11 +101,10 @@ class PotController extends Controller
     {
         try {
             $pot->update($request->validated());
-
             return response()->json(['success' => true, 'data' => $pot]);
 
-        } catch (\Throwable $th) {
-            return response()->json(['success' => true,'message' => $th->getMessage()],$th->getCode());
+        } catch (Exception $e) {
+            return response()->json(['success' => false,'message' => $e],Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -94,27 +113,15 @@ class PotController extends Controller
      */
     public function destroy(Pot $pot)
     {
-        $potToDelete = Pot::find($pot);
-
-        if(!$potToDelete) {
-            return response()->json([
-            "message" => 'Pot not found',
-            'success' => false
-            ], Response::HTTP_NOT_FOUND);
-        }
 
         try {
             $pot->delete();
+            return response()->noContent();
+        }catch(Exception $e) {
             return response()->json([
-                "message" => 'Pot deleted succesfully',
-                'success' => true
-            ], Response::HTTP_NO_CONTENT);
-
-        }catch(\LogicException $le) {
-            return response()->json([
-                "message" => 'Error deleting pot: '. $le->getMessage(),
-                'success' => false
-            ], Response::HTTP_NO_CONTENT);
+                'success' => false,
+                "message" => $e,
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }

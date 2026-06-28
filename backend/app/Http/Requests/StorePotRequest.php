@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class StorePotRequest extends FormRequest
 {
@@ -18,7 +18,7 @@ class StorePotRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, array<mixed>|string>
      */
     public function rules(): array
     {
@@ -28,6 +28,18 @@ class StorePotRequest extends FormRequest
             'target' => 'required',
             'total' => 'required',
             'theme' => 'required'
+        ];
+    }
+
+    #[Override]
+    public function messages()
+    {
+        return [
+            'user_id.required' => 'El usuario es obligatorio',
+            'name.required' => 'El nombre es obligatorio',
+            'target.required' => 'El objetivo es obligatorio',
+            'total.required' => 'El total es obligatorio',
+            'theme.required' => 'El tema es obligatorio',
         ];
     }
 }

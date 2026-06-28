@@ -44,7 +44,7 @@ class TransactionController extends Controller
     }
 
     public function getRecurringBills() {
-        $recurrentTransactions = Transaction::where('recurring','=',true)->where('user_id', 83)->get();
+        $recurrentTransactions = Transaction::where('recurring','=',true)->where('user_id', 1)->get();
 
         if(!$recurrentTransactions) {
             return response()->json(

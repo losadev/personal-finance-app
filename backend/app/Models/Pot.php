@@ -18,6 +18,12 @@ class Pot extends Model
         'theme',
     ];
 
+    # esto oculta esos campos que envias en el json
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
