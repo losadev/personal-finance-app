@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Balance extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'income'
+        'user_id',
+        'current',
+        'income',
+        'expenses'
     ];
+
     public function getById(string $id) {
 
         $balance = Balance::findOrFail($id);

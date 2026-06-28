@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Balance;
 use App\Models\Budget;
 use App\Models\Pot;
 use App\Models\Transaction;
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
                     ]);
                 });
             Pot::factory(5)->create(['user_id' => $user->id]);
+            Balance::factory(1)->create(['user_id' => $user->id]);
         });
 
     }
