@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreBalanceRequest extends FormRequest
+use ApiFormRequest;
+class StoreBalanceRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

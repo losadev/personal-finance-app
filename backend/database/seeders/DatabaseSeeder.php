@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Balance;
 use App\Models\Budget;
+use App\Models\Pot;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       User::factory(10)
+        User::factory(10)
         ->create()
         ->each(function ($user) {
             Budget::factory(3)
@@ -28,6 +30,9 @@ class DatabaseSeeder extends Seeder
                         'user_id'   => $user->id,
                     ]);
                 });
+            Pot::factory(5)->create(['user_id' => $user->id]);
+            Balance::factory(1)->create(['user_id' => $user->id]);
         });
+
     }
 }

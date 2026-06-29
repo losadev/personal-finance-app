@@ -6,10 +6,11 @@ use App\Http\Requests\AddMoneyToPotRequest;
 use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
 use App\Http\Requests\WithdrawMoneyFromPotRequest;
-use App\Http\Resources\PotCollection;
 use App\Models\Pot;
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\ValidationException;
 
 class PotController extends Controller
 {
@@ -18,7 +19,7 @@ class PotController extends Controller
      */
     public function index()
     {
-        return  Pot::all()->where('user_id', 50);
+        return  Pot::all()->where('user_id', 1);
     }
 
     /**
@@ -27,30 +28,70 @@ class PotController extends Controller
     public function store(StorePotRequest $request)
     {
 
-        $pot = Pot::create($request->validatet());
+        try {
+            $pot = Pot::create($request->validated());
+            return response()->json(
+                [
+                'success' => true,
+                'message' => 'Pot created successfully',
+                'data'    => $pot,
+                ],
+                Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                'success' => false,
+                'message' => $e->getMessage()
+                ],
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Pot created successfully',
-            'data'    => $pot,
-        ], 201);
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
 
-        $pot->total += $request->validated('money');
+        try {
 
-        $pot->save();
+            $pot->total += $request->validated('money');
+            $pot->save();
 
-        return response()->json(['success' => true, 'data' => $pot]);
+            return response()->json(
+                [
+                    'success' => true,
+                    'data' => $pot
+                ],
+                Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response()->json(
+            [
+            'success' => false,
+            'message' => $e
+            ],
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function withdrawMoney(WithdrawMoneyFromPotRequest $request , Pot $pot) {
-        $pot->total -= $request->validated('money');
 
-        $pot->save();
+        try {
+            $pot->total -= $request->validated('money');
+            $pot->save();
 
-        return response()->json(['success' => true, 'data' => $pot]);
+            return response()->json(
+                [
+                    'success' => true,
+                    'data' => $pot
+                ],
+                Response::HTTP_OK
+                );
+        } catch (Exception $e) {
+            return response()->json(
+            [
+            'success' => false,
+            'message' => $e
+            ],
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -58,9 +99,13 @@ class PotController extends Controller
      */
     public function update(UpdatePotRequest $request, Pot $pot)
     {
-        $pot->update($request->validated());
+        try {
+            $pot->update($request->validated());
+            return response()->json(['success' => true, 'data' => $pot]);
 
-        return response()->json(['success' => true, 'data' => $pot]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false,'message' => $e],Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -68,8 +113,16 @@ class PotController extends Controller
      */
     public function destroy(Pot $pot)
     {
-        $pot->delete();
 
-        return response()->noContent();
+        try {
+            $pot->delete();
+            return response()->noContent();
+        }catch(Exception $e) {
+            return response()->json([
+                'success' => false,
+                "message" => $e,
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

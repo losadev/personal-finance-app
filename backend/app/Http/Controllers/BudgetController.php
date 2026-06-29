@@ -6,7 +6,10 @@ use App\Contracts\BudgetInterface;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
+use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\ValidationException;
 
 class BudgetController extends Controller
 {
@@ -20,15 +23,13 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //$budgets = $this->budget->index();
-
-        $budgets = Budget::with('transactions')->get();
+        $budgets = Budget::all();
 
         if($budgets->isEmpty()) {
-            return response()->json(['success' => false, 'message' => 'Budgets not found'], 404);
+            return response()->json(['success' => false, 'message' => 'Budgets not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json(['success' => true, 'data' => $budgets], 200);
+        return response()->json(['success' => true, 'data' => $budgets], Response::HTTP_OK);
     }
 
     /**
@@ -38,21 +39,20 @@ class BudgetController extends Controller
     {
 
         try {
-            // Create devuelve el modelo, no false/true
-            // save() si devuelve true/false
-            $budget = $this->budget->store($request);
+            $validated = $request->validated();
+            $budget = $this->budget->store($validated);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Budget created successfully',
                 'data'    => $budget,
-            ], 201);
+            ], Response::HTTP_OK);
 
-        } catch (\Throwable $th) {
+        } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => $th->getMessage(),
-            ], 500);
+                'error' => $e->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
     }
@@ -62,20 +62,40 @@ class BudgetController extends Controller
      */
     public function update(UpdateBudgetRequest $request, Budget $budget)
     {
-        $updated = $budget->update($request->validated());
 
-        if(!$updated) {
+        try {
+
+            $validated = $request->validated();
+            $budget = Budget::find($budget->id);
+
+            if (!$budget) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Budget not found',
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            $updated = $budget->update($validated);
+
+            if(!$updated) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Internal server error',
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
             return response()->json([
-                'success' => false,
-                'message' => 'Error updating budget',
-            ], 500);
-        }
+                    'success' => true,
+                    'message' => 'Budget updated successfully',
+                    'data' => $updated
+                ], Response::HTTP_OK);
 
-        return response()->json([
-                'success' => true,
-                'message' => 'Budget updated successfully',
-                'data' => $budget
-        ]);
+        } catch (Exception $e) {
+            return response()->json([
+                    'success' => false,
+                    'error' => $e,
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -83,8 +103,16 @@ class BudgetController extends Controller
      */
     public function destroy(Budget $budget)
     {
-        $budget->delete();
-        return response()->json(['success' => true, 'message' => 'Budget deleted successfully'], 204);
+        try {
+            $budget->delete();
+            return response()->json(['success' => true, 'message' => 'Budget deleted successfully'], Response::HTTP_NO_CONTENT);
+
+        } catch (\LogicException $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()], Response::HTTP_NO_CONTENT);
+
+        }catch(Exception $e) {
+            return response()->json(["success" => false, "mesaage" => $e]);
+        }
     }
 
     public function getTransactionsByCategory() {
