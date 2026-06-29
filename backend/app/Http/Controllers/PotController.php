@@ -28,23 +28,23 @@ class PotController extends Controller
     public function store(StorePotRequest $request)
     {
 
-    try {
-        $pot = Pot::create($request->validated());
-        return response()->json(
-            [
-            'success' => true,
-            'message' => 'Pot created successfully',
-            'data'    => $pot,
-            ],
-            Response::HTTP_CREATED);
-    } catch (Exception $e) {
-        return response()->json(
-            [
-            'success' => false,
-            'message' => $e
-            ],
-            Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
+        try {
+            $pot = Pot::create($request->validated());
+            return response()->json(
+                [
+                'success' => true,
+                'message' => 'Pot created successfully',
+                'data'    => $pot,
+                ],
+                Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                'success' => false,
+                'message' => $e->getMessage()
+                ],
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
     }
 
