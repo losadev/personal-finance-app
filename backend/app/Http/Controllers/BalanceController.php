@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Balance;
 use Exception;
-<<<<<<< HEAD
-=======
 use Illuminate\Http\Request;
->>>>>>> feat/filtering-transactions
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
@@ -39,6 +36,5 @@ class BalanceController extends Controller
         $x = $currentBalance->update(['income' => $money]);
 
         return response()->json($x, Response::HTTP_NOT_FOUND);
->>>>>>> feat/filtering-transactions
     }
 }

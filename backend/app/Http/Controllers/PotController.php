@@ -7,6 +7,7 @@ use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
 use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Models\Pot;
+use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
@@ -56,7 +57,6 @@ class PotController extends Controller
                 ],
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        ], Response::HTTP_CREATED);
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {
