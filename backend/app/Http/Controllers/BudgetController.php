@@ -6,6 +6,8 @@ use App\Contracts\BudgetInterface;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
+use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class BudgetController extends Controller
@@ -25,10 +27,10 @@ class BudgetController extends Controller
         $budgets = Budget::with('transactions')->get();
 
         if($budgets->isEmpty()) {
-            return response()->json(['success' => false, 'message' => 'Budgets not found'], 404);
+            return response()->json(['success' => false, 'message' => 'Budgets not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json(['success' => true, 'data' => $budgets], 200);
+        return response()->json(['success' => true, 'data' => $budgets], Response::HTTP_OK);
     }
 
     /**
@@ -46,13 +48,13 @@ class BudgetController extends Controller
                 'success' => true,
                 'message' => 'Budget created successfully',
                 'data'    => $budget,
-            ], 201);
+            ], Response::HTTP_CREATED);
 
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage(),
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -67,8 +69,8 @@ class BudgetController extends Controller
         if(!$updated) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error updating budget',
-            ], 500);
+                'message' => 'Budget not found',
+            ], );
         }
 
         return response()->json([
@@ -83,16 +85,21 @@ class BudgetController extends Controller
      */
     public function destroy(Budget $budget)
     {
-        $budget->delete();
-        return response()->json(['success' => true, 'message' => 'Budget deleted successfully'], 204);
+        try {
+            $budgetToDelete = Budget::findOrFail($budget);
+        }catch(Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], );
+        }
+
+        if(isset($budgetToDelete)) {
+            $budget->delete();
+            return response()->json(['success' => true, 'message' => 'Budget deleted successfully'], Response::HTTP_NO_CONTENT);
+        }
     }
 
     public function getTransactionsByCategory() {
 
-        $budgets = Budget::select('id', 'category')
-    ->with('transactions')
-    ->get()
-    ->map(function ($budget) {
+        $budgets = Budget::select('id', 'category')->with('transactions')->get()->map(function ($budget) {
         $budget->transactions = $budget->transactions->take(3);
         unset($budget->transactions);
 

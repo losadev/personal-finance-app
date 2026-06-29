@@ -9,6 +9,7 @@ use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Http\Resources\PotCollection;
 use App\Models\Pot;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class PotController extends Controller
@@ -18,7 +19,19 @@ class PotController extends Controller
      */
     public function index()
     {
-        return  Pot::all()->where('user_id', 50);
+        $pots = Pot::all()->where('user_id', 50);
+
+        if ($pots->isEmpty()) {
+            return response()->json([
+                "success" => false,
+                "message" => "Pots not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+                "success" => true,
+                "data" => $pots
+            ]);
     }
 
     /**
@@ -33,7 +46,7 @@ class PotController extends Controller
             'success' => true,
             'message' => 'Pot created successfully',
             'data'    => $pot,
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {

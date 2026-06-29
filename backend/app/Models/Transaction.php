@@ -43,9 +43,19 @@ class Transaction extends Model
         };
     }
 
-    public function  scopeSortByName(Builder $builder, ?bool $) {
-        return $builder->when($oldest, fn ($builder) => $builder->oldest('created_at'));
+    public function  scopeSortByAmount(Builder $builder, ?string $direction = 'asc') {
+        return $builder->orderBy('amount', $direction);
     }
 
-    // TODO: faltan amount (highest and lowest) y name (A-Z , Z-A)
+    public function scopeSortByName(Builder $builder, ?string $direction = 'asc') {
+        return $builder->orderBy('name', $direction);
+    }
+    public function scopeMultiSorted(Builder $builder, ?array $sorts = [])  {
+        foreach ($sorts as  $column => $direction) {
+            $direction = in_array($direction, ['asc', 'desc']) ? $direction : 'asc';
+            $builder->orderBy($column, $direction);
+        }
+
+        return $builder;
+    }
 }
