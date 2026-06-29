@@ -7,7 +7,6 @@ use App\Http\Requests\StorePotRequest;
 use App\Http\Requests\UpdatePotRequest;
 use App\Http\Requests\WithdrawMoneyFromPotRequest;
 use App\Models\Pot;
-use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
@@ -19,7 +18,19 @@ class PotController extends Controller
      */
     public function index()
     {
-        return  Pot::all()->where('user_id', 1);
+        $pots = Pot::all()->where('user_id', 50);
+
+        if ($pots->isEmpty()) {
+            return response()->json([
+                "success" => false,
+                "message" => "Pots not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+                "success" => true,
+                "data" => $pots
+            ]);
     }
 
     /**
@@ -45,7 +56,7 @@ class PotController extends Controller
                 ],
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
+        ], Response::HTTP_CREATED);
     }
 
     public function addMoney(AddMoneyToPotRequest $request, Pot $pot) {

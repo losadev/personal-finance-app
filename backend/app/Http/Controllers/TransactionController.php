@@ -38,6 +38,7 @@ class TransactionController extends Controller
                 'success' => false
                 ],
                 Response::HTTP_NOT_FOUND);
+
         }
 
         return response()->json($transactions, Response::HTTP_OK);
