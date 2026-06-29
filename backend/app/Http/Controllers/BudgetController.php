@@ -46,22 +46,13 @@ class BudgetController extends Controller
                 'success' => true,
                 'message' => 'Budget created successfully',
                 'data'    => $budget,
-<<<<<<< HEAD
-            ], Response::HTTP_OK);
-=======
             ], Response::HTTP_CREATED);
->>>>>>> feat/filtering-transactions
 
-        } catch (ValidationException $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-<<<<<<< HEAD
-                'error' => $e->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-=======
-                'message' => $th->getMessage(),
+                'message' => $e->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
->>>>>>> feat/filtering-transactions
         }
 
     }
