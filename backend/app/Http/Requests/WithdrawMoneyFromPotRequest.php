@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use ApiFormRequest;
-
 class WithdrawMoneyFromPotRequest extends ApiFormRequest
 {
     /**

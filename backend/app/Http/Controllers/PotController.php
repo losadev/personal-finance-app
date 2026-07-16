@@ -10,7 +10,6 @@ use App\Models\Pot;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Validation\ValidationException;
 
 class PotController extends Controller
 {
@@ -19,7 +18,7 @@ class PotController extends Controller
      */
     public function index()
     {
-        $pots = Pot::all()->where('user_id', 50);
+        $pots = Pot::all();
 
         if ($pots->isEmpty()) {
             return response()->json([

@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
-use ApiFormRequest;
+use App\Http\Requests\ApiFormRequest;
 
 class UpdateBudgetRequest extends ApiFormRequest
 {
