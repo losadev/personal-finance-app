@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests;
 
-use ApiFormRequest;
-use Override;
+use App\Http\Requests\ApiFormRequest;
 
 class UserRequest extends ApiFormRequest
 {
@@ -29,7 +28,6 @@ class UserRequest extends ApiFormRequest
         ];
     }
 
-    #[Override]
     public function messages(): array
     {
         return [

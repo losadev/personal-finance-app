@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -34,6 +35,6 @@ Route::get('/sign-up', function() {
 
 
 
-Route::get('/login', function() {
-    return '<h1>Login</h1>';
-});
+#Route::get('/login', function() {return '<h1>Login</h1>';});
+
+Route::post("/login", [AuthController::class, 'login']);
