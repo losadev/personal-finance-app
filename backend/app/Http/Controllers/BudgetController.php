@@ -9,7 +9,6 @@ use App\Models\Budget;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Validation\ValidationException;
 
 class BudgetController extends Controller
 {
@@ -48,12 +47,11 @@ class BudgetController extends Controller
                 'data'    => $budget,
             ], Response::HTTP_CREATED);
 
-        } catch (ValidationException $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'error' => $e->errors(),
+                'error' => $e->getMessage(),
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
-
         }
 
     }

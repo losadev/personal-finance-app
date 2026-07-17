@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use ApiFormRequest;
 use Override;
 
 class StorePotRequest extends ApiFormRequest
