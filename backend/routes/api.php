@@ -1,15 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\PotController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BudgetController;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::controller(TransactionController::class)->group(function() {
     Route::get('/transactions/{page?}/{name?}/{sort?}/{category?}','index')->name('transactions.index');
@@ -28,3 +24,6 @@ Route::controller(PotController::class)->name('pots.')->group(function() {
 Route::apiResource("budgets", BudgetController::class);
 Route::apiResource('pots', PotController::class);
 Route::apiResource('balances', BalanceController::class);
+
+Route::post("/register", [AuthController::class, 'register']);
+Route::post("/login", [AuthController::class])->name("login");

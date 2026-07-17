@@ -19,7 +19,7 @@ class PotController extends Controller
      */
     public function index()
     {
-        $pots = Pot::all()->where('user_id', 50);
+        $pots = Pot::all()->where('user_id', 10);
 
         if ($pots->isEmpty()) {
             return response()->json([
