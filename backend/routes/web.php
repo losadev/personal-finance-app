@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,3 +38,5 @@ Route::get('/sign-up', function() {
 Route::get('/login', function() {
     return '<h1>Login</h1>';
 });
+
+Route::middleware('web')->post('/login', [AuthController::class, 'login']);

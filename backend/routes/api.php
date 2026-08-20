@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\PotController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\InfoController;
 use App\Http\Middleware\CheckValueInHeader;
 use App\Http\Middleware\DataToUppercase;
 use App\Http\Middleware\LogRequest;
@@ -31,3 +34,48 @@ Route::controller(PotController::class)->name('pots.')->group(function() {
 Route::apiResource("budgets", BudgetController::class);
 Route::apiResource('pots', PotController::class)->middleware(LogRequest::class);
 Route::apiResource('balances', BalanceController::class);
+
+Route::controller(AuthController::class)->group(function() {
+    Route::post('/register','register');
+    //Route::middleware('web')->post('/login','login');
+});
+Route::get('/saludar', [InfoController::class, 'saludar']);
+
+Route::get('/iva', [InfoController::class, 'iva']);
+Route::get('/encryptEmail/{id}', [InfoController::class, 'encryptEmail']);
+
+/*
+|--------------------------------------------------------------------------
+| Protected Routes (authentication required)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth:sanctum')->group(function () {
+    // Authentication routes
+    Route::prefix('auth')->group(function () {
+        // Get current user
+        Route::get('/user', [AuthController::class, 'user'])
+            ->name('api.auth.user');
+
+        // Logout (revoke current token)
+        //Route::post('/logout', [AuthController::class, 'logout'])
+        //->name('api.auth.logout');
+
+        // Logout all sessions
+        // Route::post('/logout-all', [AuthController::class, 'logoutAll'])
+        //     ->name('api.auth.logout-all');
+
+        // List all tokens
+        Route::get('/tokens', [AuthController::class, 'tokens'])
+            ->name('api.auth.tokens');
+
+        // Revoke specific token
+        // Route::delete('/tokens/{tokenId}', [AuthController::class, 'revokeToken'])
+        //     ->name('api.auth.revoke-token');
+    });
+
+    // Your protected API resources go here
+    // Route::apiResource('posts', PostController::class);
+    // Route::apiResource('comments', CommentController::class);
+    });
+
+Route::get('api',[ApiController::class, 'get']);
