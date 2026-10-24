@@ -25,3 +25,7 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /personal-finance-app
+/frontend-next
+/docker
+.dockerignore
+.gitignore
