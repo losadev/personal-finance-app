@@ -14,6 +14,13 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
+        if (!$request->user()->tokenCan('read') && !$request->user()->tokenCan('transactions:read')) {
+            return response()->json([
+                'message' => 'Insufficient permissions',
+                'required_abilities' => ['read', 'transactions:read'],
+            ], Response::HTTP_FORBIDDEN);
+        }
+
         $query = Transaction::where(function($query) use($request) {
             if($request->input('name')) {
                 $query->where('name','like','%'.$request->input('name').'%');

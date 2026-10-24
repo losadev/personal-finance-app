@@ -1,16 +1,13 @@
-FROM node:20-alpine
+FROM node:24-slim
+
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+COPY package*.json ./
 
-# Instala deps solo con manifiestos para cache
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN npm install
 
-# En dev copiarás el código con un volumen, pero dejamos un fallback:
 COPY . .
 
-EXPOSE 3001
+EXPOSE 3000
 
-# start:dev debe existir (nest start --watch / ts-node-dev)
-CMD ["pnpm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
