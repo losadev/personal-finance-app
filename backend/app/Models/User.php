@@ -9,15 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-<<<<<<< HEAD
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
-=======
 use Laravel\Sanctum\HasApiTokens;
->>>>>>> 3e21d9af89bdb35f957ce04f733369c9333ead2e
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 

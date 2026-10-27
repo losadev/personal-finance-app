@@ -35,14 +35,6 @@ Route::get('/sign-up', function() {
 
 
 
-<<<<<<< HEAD
 #Route::get('/login', function() {return '<h1>Login</h1>';});
 
 Route::post("/login", [AuthController::class, 'login']);
-=======
-Route::get('/login', function() {
-    return '<h1>Login</h1>';
-});
-
-Route::middleware('web')->post('/login', [AuthController::class, 'login']);
->>>>>>> 3e21d9af89bdb35f957ce04f733369c9333ead2e
