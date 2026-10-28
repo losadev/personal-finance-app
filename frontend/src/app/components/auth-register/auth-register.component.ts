@@ -2,12 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-auth-register',
-  standalone: true,
-  imports: [],
+  standalone: false,
   templateUrl: './auth-register.component.html',
-  styleUrl: './auth-register.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './auth-register.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthRegisterComponent {
-
-}
+export class AuthRegisterComponent {}

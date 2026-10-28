@@ -1,1 +1,49 @@
-<p>auth-login works!</p>
+<section class="login-card" aria-labelledby="login-heading">
+  <h1 id="login-heading">Login</h1>
+
+  <form class="login-form" (submit)="$event.preventDefault()">
+    <div class="login-fields">
+      <div class="login-field">
+        <label for="login-email">Email</label>
+        <input
+          id="login-email"
+          name="email"
+          type="email"
+          autocomplete="username"
+          spellcheck="false"
+          required
+        >
+      </div>
+
+      <div class="login-field">
+        <label for="login-password">Password</label>
+        <div class="password-field">
+          <input
+            id="login-password"
+            name="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            autocomplete="current-password"
+            required
+          >
+          <button
+            class="password-toggle"
+            type="button"
+            aria-label="Show password"
+            aria-controls="login-password"
+            [attr.aria-pressed]="passwordVisible"
+            (click)="passwordVisible = !passwordVisible"
+          >
+            <span class="password-eye" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button class="login-submit" type="submit">Login</button>
+  </form>
+
+  <p class="signup-prompt">
+    <span>Need to create an account?</span>
+    <a routerLink="/auth/register">Sign Up</a>
+  </p>
+</section>

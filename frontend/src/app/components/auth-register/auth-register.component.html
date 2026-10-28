@@ -1,1 +1,20 @@
-<p>auth-register works!</p>
+<h1>Crear cuenta</h1>
+
+<form method="post">
+  <div>
+    <label for="register-email">Email</label>
+    <input id="register-email" name="email" type="email" autocomplete="username" required>
+  </div>
+
+  <div>
+    <label for="register-password">Contraseña</label>
+    <input id="register-password" name="password" type="password" autocomplete="new-password" required>
+  </div>
+
+  <div>
+    <label for="register-confirm-password">Confirmar contraseña</label>
+    <input id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required>
+  </div>
+
+  <button type="submit">Registrarse</button>
+</form>
