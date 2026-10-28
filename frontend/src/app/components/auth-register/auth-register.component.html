@@ -1,20 +1,29 @@
-<h1>Crear cuenta</h1>
+<section class="finance-card finance-stack" aria-labelledby="register-heading" lang="es">
+  <h1 class="finance-text-1" id="register-heading">Crear cuenta</h1>
 
-<form method="post">
-  <div>
-    <label for="register-email">Email</label>
-    <input id="register-email" name="email" type="email" autocomplete="username" required>
-  </div>
+  <form class="finance-form" (submit)="$event.preventDefault()">
+    <div class="finance-form-fields">
+      <div class="finance-field">
+        <label class="finance-label" for="register-email">Email</label>
+        <input class="finance-input" id="register-email" name="email" type="email" autocomplete="username" spellcheck="false" required>
+      </div>
 
-  <div>
-    <label for="register-password">Contraseña</label>
-    <input id="register-password" name="password" type="password" autocomplete="new-password" required>
-  </div>
+      <div class="finance-field">
+        <label class="finance-label" for="register-password">Contraseña</label>
+        <input class="finance-input" id="register-password" name="password" type="password" autocomplete="new-password" required>
+      </div>
 
-  <div>
-    <label for="register-confirm-password">Confirmar contraseña</label>
-    <input id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required>
-  </div>
+      <div class="finance-field">
+        <label class="finance-label" for="register-confirm-password">Confirmar contraseña</label>
+        <input class="finance-input" id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required>
+      </div>
+    </div>
 
-  <button type="submit">Registrarse</button>
-</form>
+    <button class="finance-button finance-button--primary finance-button--block" type="submit">Registrarse</button>
+  </form>
+
+  <p class="finance-inline-prompt">
+    <span>¿Ya tenés una cuenta?</span>
+    <a class="finance-link" routerLink="/auth/login">Iniciar sesión</a>
+  </p>
+</section>

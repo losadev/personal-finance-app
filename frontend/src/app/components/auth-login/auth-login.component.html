@@ -1,11 +1,12 @@
-<section class="login-card" aria-labelledby="login-heading">
-  <h1 id="login-heading">Login</h1>
+<section class="finance-card finance-stack" aria-labelledby="login-heading">
+  <h1 class="finance-text-1" id="login-heading">Login</h1>
 
-  <form class="login-form" (submit)="$event.preventDefault()">
-    <div class="login-fields">
-      <div class="login-field">
-        <label for="login-email">Email</label>
+  <form class="finance-form" (submit)="$event.preventDefault()">
+    <div class="finance-form-fields">
+      <div class="finance-field">
+        <label class="finance-label" for="login-email">Email</label>
         <input
+          class="finance-input"
           id="login-email"
           name="email"
           type="email"
@@ -15,10 +16,11 @@
         >
       </div>
 
-      <div class="login-field">
-        <label for="login-password">Password</label>
-        <div class="password-field">
+      <div class="finance-field">
+        <label class="finance-label" for="login-password">Password</label>
+        <div class="finance-input-group">
           <input
+            class="finance-input"
             id="login-password"
             name="password"
             [type]="passwordVisible ? 'text' : 'password'"
@@ -26,24 +28,27 @@
             required
           >
           <button
-            class="password-toggle"
+            class="finance-input-action"
             type="button"
-            aria-label="Show password"
+            [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
             aria-controls="login-password"
             [attr.aria-pressed]="passwordVisible"
             (click)="passwordVisible = !passwordVisible"
           >
-            <span class="password-eye" aria-hidden="true"></span>
+            <img
+              [src]="passwordVisible ? 'assets/images/icon-hide-password.svg' : 'assets/images/icon-show-password.svg'"
+              alt=""
+            >
           </button>
         </div>
       </div>
     </div>
 
-    <button class="login-submit" type="submit">Login</button>
+    <button class="finance-button finance-button--primary finance-button--block" type="submit">Login</button>
   </form>
 
-  <p class="signup-prompt">
+  <p class="finance-inline-prompt">
     <span>Need to create an account?</span>
-    <a routerLink="/auth/register">Sign Up</a>
+    <a class="finance-link" routerLink="/auth/register">Sign Up</a>
   </p>
 </section>

@@ -1,0 +1,77 @@
+/* Source: Figma personal-finance-app / Design System (182:285). */
+@font-face {
+  font-family: "Public Sans";
+  src: url("/assets/fonts/PublicSans-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Public Sans";
+  src: url("/assets/fonts/PublicSans-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --finance-white: #ffffff;
+  --finance-beige-100: #f8f4f0;
+  --finance-beige-500: #98908b;
+  --finance-grey-100: #f2f2f2;
+  --finance-grey-300: #b3b3b3;
+  --finance-grey-500: #696868;
+  --finance-grey-900: #201f24;
+  --finance-green: #277c78;
+  --finance-yellow: #f2cdac;
+  --finance-cyan: #82c9d7;
+  --finance-navy: #626070;
+  --finance-red: #c94736;
+  --finance-purple: #826cb0;
+  --finance-pink: #af81ba;
+  --finance-turquoise: #597c7c;
+  --finance-brown: #93674f;
+  --finance-magenta: #934f6f;
+  --finance-blue: #3f82b2;
+  --finance-navy-grey: #97a0ac;
+  --finance-army-green: #7f9161;
+  --finance-gold: #cab361;
+  --finance-orange: #be6c49;
+
+  --finance-font-family: "Public Sans", Arial, sans-serif;
+  --finance-text-1: 2rem;
+  --finance-text-2: 1.25rem;
+  --finance-text-3: 1rem;
+  --finance-text-4: 0.875rem;
+  --finance-text-5: 0.75rem;
+  --finance-leading-heading: 1.2;
+  --finance-leading-body: 1.5;
+  --finance-weight-regular: 400;
+  --finance-weight-bold: 700;
+
+  --finance-space-50: 0.25rem;
+  --finance-space-100: 0.5rem;
+  --finance-space-150: 0.75rem;
+  --finance-space-200: 1rem;
+  --finance-space-250: 1.25rem;
+  --finance-space-300: 1.5rem;
+  --finance-space-400: 2rem;
+  --finance-space-500: 2.5rem;
+  --finance-space-600: 3rem;
+  --finance-space-800: 4rem;
+  --finance-space-1000: 5rem;
+  --finance-space-1600: 8rem;
+  --finance-radius-control: 0.5rem;
+  --finance-radius-card: 0.75rem;
+  --finance-radius-sidebar: 1rem;
+
+  --finance-background: var(--finance-beige-100);
+  --finance-surface: var(--finance-white);
+  --finance-foreground: var(--finance-grey-900);
+  --finance-muted: var(--finance-grey-500);
+  --finance-border: var(--finance-beige-500);
+  --finance-accent: var(--finance-green);
+  --finance-danger: var(--finance-red);
+}
