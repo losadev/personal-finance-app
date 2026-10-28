@@ -15,6 +15,7 @@
 /auth.json
 /node_modules
 /.tools/
+/scripts/
 /public/build
 /public/hot
 /public/storage
@@ -33,3 +34,4 @@ Thumbs.db
 AGENTS.md
 data.json
 README*
+vscode
