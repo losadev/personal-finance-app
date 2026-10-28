@@ -30,3 +30,5 @@ Thumbs.db
 /docker
 .dockerignore
 .gitignore
+AGENTS.md
+data.json
